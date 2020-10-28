@@ -1,0 +1,17 @@
+{
+  "name": "twitterscorebot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test",
+    "start":"node start"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^2.6.1",
+    "hltv": "^2.20.5",
+    "twit": "^2.2.11"
+  }
+}
