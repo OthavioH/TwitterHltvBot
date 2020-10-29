@@ -7,7 +7,7 @@ const fs = require('fs');
 
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 2000;
 app.listen(port, () => {
    console.log(`listening on ${port}`);
 });
@@ -82,22 +82,24 @@ async function execBot(){
                 }
                 else{
                     HLTV.getMatches().then((res) => {
+
+                        console.log(res);
         
                         for(var i = 0;i<=res.length;i++){
                             try{
                                 if(res[i].team1.name.toLowerCase() == replyTeamName || res[i].team2.name == replyTeamName){
                                     HLTV.getMatch({id:res[i].id}).then(result=>{
                                         switch(result.format){
-                                            case "Best of 3":
+                                            case result.format.includes("Best of 3"):
                                                 indice = 3;
                                                 break;
-                                            case "Best of 2":
+                                            case result.format.includes("Best of 2"):
                                                 indice = 2;
                                                 break;
-                                            case "Best of 1":
+                                            case result.format.includes("Best of 1"):
                                                 indice = 1;
                                                 break;
-                                            default:
+                                            case result.format.includes("Best of 5"):
                                                 indice = 5;
                                                 break;
                                         }
