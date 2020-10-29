@@ -50,98 +50,140 @@ var indice = 0;
 var strMaps = "";
 var isMatchLive="";
 var matchEvent = "";
+var replyUserName = "";
 
-stream.on('tweet',function(tweet){
-    tweetReplyId = tweet.id_str;
-    if(tweet.text.substr(9).trim().length>1){
-        replyTeamName = tweet.text.split('#BotHltv')[1].trim().toLowerCase();
-        if(tweet.user.screen_name == "BotHltv"){
-            return null;
+var numberIndice=0;
+
+execBot();
+
+async function execBot(){
+    await stream.on('tweet',function(tweet){
+        tweetReplyId = tweet.id_str;
+        replyUserName = tweet.user.screen_name;
+        if(tweet.text.substr(9).trim().length>1){
+            replyTeamName = tweet.text.split('#BotHltv')[1].trim().toLowerCase();
+            if(tweet.user.screen_name == "BotHltv"){
+                return null;
+            }
+            else if(tweet.user.screen_name == "FireXter" && tweet.text.split('#BotHltv')[1].trim() +1 >3){
+                matchId = tweet.text.split('#BotHltv')[1].trim();
+                Twitter.post(
+                    'statuses/update',
+                    {
+                        in_reply_to_status_id:tweetReplyId,
+                        is_quote_status:true,
+                        auto_populate_reply_metadata:true,
+                        status:`Match updated`
+                    }
+                );
+                connectHLTVBot();
+            }
+            else{
+                HLTV.getMatches().then((res) => {
+    
+                    for(var i = 0;i<=res.length;i++){
+                        try{
+                            if(res[i].team1.name.toLowerCase() == replyTeamName || res[i].team2.name == replyTeamName){
+                                HLTV.getMatch({id:res[i].id}).then(result=>{
+                                    switch(result.format){
+                                        case "Best of 3":
+                                            indice = 3;
+                                            break;
+                                        case "Best of 2":
+                                            indice = 2;
+                                            break;
+                                        case "Best of 1":
+                                            indice = 1;
+                                            break;
+                                        case "Best of 1":
+                                            indice = 5;
+                                            break;
+                                    }
+                                    for(var i = 0;i<indice;i++){
+                                        strMaps += `Map ${i+1}: ${result.maps[i].name} ${result.maps[i].result}\n`
+                                    }
+                                    result.live == false ? isMatchLive = "no" : isMatchLive="yes"
+                                    matchEvent=res[i].event.name;
+        
+                                    Twitter.post(
+                                        'statuses/update',
+                                        {
+                                            in_reply_to_status_id:tweetReplyId,
+                                            is_quote_status:true,
+                                            auto_populate_reply_metadata:true,
+                                            status:`${result.team1.name} vs ${result.team2.name}\n\n`+
+                                            `Event: ${matchEvent}\n`+
+                                            `Maps:\n${strMaps}`+
+                                            `Is it live now? R: ${isMatchLive}`
+                                        },
+                                        function (error,data,response){
+                                            if(error != undefined){
+                                                console.log("Erro no tweet\n"+error);
+                                            }
+                                            else if(data!=undefined){
+                                                strMaps = "";
+                                                matchEvent = "";
+                                                isMatchLive = "";
+                                            }
+                                        }
+                                    );
+                                });
+                                numberIndice = -400;
+                            }
+                            else{
+                                numberIndice = numberIndice + 1;
+                            }
+                        }
+                        catch{
+                            console.log("Deu ruim");
+                        }
+                        
+                    }
+                    if(numberIndice >=0){
+                        Twitter.post(
+                            'statuses/update',
+                            {
+                                in_reply_to_status_id:tweetReplyId,
+                                is_quote_status:true,
+                                auto_populate_reply_metadata:true,
+                                status:`Couldn't find a match for the team you're looking for.\nYou typed the wrong name or there's no upcoming match for this team.`
+                            },
+                            function (error,data,response){
+                                if(error != undefined){
+                                    console.log("Erro no tweet de erro\n"+error);
+                                }
+                                else if(data!=undefined){
+                                    strMaps = "";
+                                    matchEvent = "";
+                                    isMatchLive = "";
+                                }
+                            }
+                        );
+                    }
+                });
+        
+            }
+    
         }
-        else if(tweet.user.screen_name == "FireXter" && tweet.text.split('#BotHltv')[1].trim() +1 >3){
-            matchId = tweet.text.split('#BotHltv')[1].trim();
+        else{
             Twitter.post(
                 'statuses/update',
                 {
                     in_reply_to_status_id:tweetReplyId,
                     is_quote_status:true,
                     auto_populate_reply_metadata:true,
-                    status:`Match updated`
+                    status:`Please when you use this #, type only the name of one team from www.hltv.org.`
+                },
+                function (error,data,response){
+                    if(error != undefined){
+                        console.log("Erro in the error Tweet\n"+error);
+                    }
                 }
             );
-            connectHLTVBot();
         }
-        else{
-            HLTV.getMatches().then((res) => {
-
-                for(var i = 0;i<=res.length;i++){
-                    if(res[i].team1.name.toLowerCase() == replyTeamName || res[i].team2.name == replyTeamName){
-                        HLTV.getMatch({id:res[i].id}).then(result=>{
-                            switch(result.format){
-                                case "Best of 3":
-                                    indice = 3;
-                                    break;
-                                case "Best of 2":
-                                    indice = 2;
-                                    break;
-                                case "Best of 1":
-                                    indice = 1;
-                                    break;
-                            }
-                            for(var i = 0;i<indice;i++){
-                                strMaps += `Map ${i+1}: ${result.maps[i].name} ${result.maps[i].result}\n`
-                            }
-                            result.live == false ? isMatchLive = "no" : isMatchLive="yes"
-                            matchEvent=res[i].event.name;
-
-                            Twitter.post(
-                                'statuses/update',
-                                {
-                                    in_reply_to_status_id:tweetReplyId,
-                                    is_quote_status:true,
-                                    auto_populate_reply_metadata:true,
-                                    status:`${result.team1.name} vs ${result.team2.name}\n\n`+
-                                    `Event: ${matchEvent}\n`+
-                                    `Maps:\n${strMaps}`+
-                                    `Is it live now? R: ${isMatchLive}`
-                                },
-                                function (error,data,response){
-                                    if(error != undefined){
-                                        console.log("Erro no tweet de erro\n"+error);
-                                    }
-                                }
-                            );
-                        });
-                    }
-                    else{
-                        console.log("Couldn't find a match for the team you're looking for.")
-                    }
-                }
-                
-            });
-    
-        }
-
-    }
-    else{
-        Twitter.post(
-            'statuses/update',
-            {
-                in_reply_to_status_id:tweetReplyId,
-                is_quote_status:true,
-                auto_populate_reply_metadata:true,
-                status:`Please when you use this #, type only the name of one team from www.hltv.org.`
-            },
-            function (error,data,response){
-                if(error != undefined){
-                    console.log("Erro in the error Tweet\n"+error);
-                }
-            }
-        );
-    }
-  
-});
-
+      
+    });    
+}
 // connectHLTVBot();
 
 async function connectHLTVBot(){
