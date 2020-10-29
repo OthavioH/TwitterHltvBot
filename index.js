@@ -89,8 +89,6 @@ async function execBot(){
                 }
                 else if(typeof tweet.text.split('#BotHltv')[1].trim() === 'string'){
                     HLTV.getMatches().then((res) => {
-
-                        console.log(res);
         
                         for(var i = 0;i<=res.length;i++){
                             try{
@@ -131,11 +129,11 @@ async function execBot(){
                                                 if(error != undefined){
                                                     console.log("Erro no tweet\n"+error);
                                                 }
-                                                response.complete(()=>{
+                                                else {
                                                     strMaps = "";
                                                     matchEvent = "";
                                                     isMatchLive = "";
-                                                }) 
+                                                }
                                             }
                                         );
                                     });
@@ -163,7 +161,7 @@ async function execBot(){
                                     if(error != undefined){
                                         console.log("Erro no tweet de erro\n"+error);
                                     }
-                                    else if(data!=undefined){
+                                    else {
                                         strMaps = "";
                                         matchEvent = "";
                                         isMatchLive = "";
@@ -218,15 +216,11 @@ async function connectHLTVBot(matchId){
             mapName = data.mapName;
             isLive = data.live;
 
-            dataScoreboard = data;
-
         }, onLogUpdate:(data,done)=>{
             if(data.log[0].RoundStart != undefined){
                 strKillLog ="";
                 strKillLog2 = "";
             }
-
-            dataLogUpdate = data;
 
             if(data.log[0].Kill != undefined){
                 killerSide = data.log[0].Kill.killerSide;
@@ -281,11 +275,6 @@ async function connectHLTVBot(matchId){
             }
 
             if(data.log[0].RoundEnd != undefined){
-
-
-                console.log(dataLogUpdate);
-                console.log("\nALOOOOOOO\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-                console.log(dataScoreboard);
 
                 if(isLive = true){
                     if(ctScore == 0 && tScore == 0){
