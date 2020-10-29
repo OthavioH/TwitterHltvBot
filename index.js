@@ -92,7 +92,7 @@ stream.on('tweet',function(tweet){
                                 strMaps += `Map ${i+1}: ${result.maps[i].name} ${result.maps[i].result}\n`
                             }
                             result.live == false ? isMatchLive = "no" : isMatchLive="yes"
-                            matchEvent=res[i].event;
+                            matchEvent=res[i].event.name;
 
                             Twitter.post(
                                 'statuses/update',
@@ -101,8 +101,8 @@ stream.on('tweet',function(tweet){
                                     is_quote_status:true,
                                     auto_populate_reply_metadata:true,
                                     status:`${result.team1.name} vs ${result.team2.name}\n\n`+
-                                    `Event: ${matchEvent}`+
-                                    `${strMaps}`+
+                                    `Event: ${matchEvent}\n`+
+                                    `Maps:\n${strMaps}`+
                                     `Is it live now? R: ${isMatchLive}`
                                 },
                                 function (error,data,response){
