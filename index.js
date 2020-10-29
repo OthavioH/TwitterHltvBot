@@ -62,23 +62,23 @@ async function execBot(){
         try{
             tweetReplyId = tweet.id_str;
             replyUserName = tweet.user.screen_name;
+            if(tweet.user.screen_name == "FireXter" && tweet.text.split('#BotHltv')[1].trim() +1 >3){
+                matchId = tweet.text.split('#BotHltv')[1].trim();
+                Twitter.post(
+                    'statuses/update',
+                    {
+                        in_reply_to_status_id:tweetReplyId,
+                        is_quote_status:true,
+                        auto_populate_reply_metadata:true,
+                        status:`Match updated`
+                    }
+                );
+                connectHLTVBot();
+            }
             if(tweet.text.substr(9).trim().length>1){
                 replyTeamName = tweet.text.split('#BotHltv')[1].trim().toLowerCase();
                 if(tweet.user.screen_name == "BotHltv"){
                     return null;
-                }
-                else if(tweet.user.screen_name == "FireXter" && tweet.text.split('#BotHltv')[1].trim() +1 >3){
-                    matchId = tweet.text.split('#BotHltv')[1].trim();
-                    Twitter.post(
-                        'statuses/update',
-                        {
-                            in_reply_to_status_id:tweetReplyId,
-                            is_quote_status:true,
-                            auto_populate_reply_metadata:true,
-                            status:`Match updated`
-                        }
-                    );
-                    connectHLTVBot();
                 }
                 else{
                     HLTV.getMatches().then((res) => {
