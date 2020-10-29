@@ -95,16 +95,16 @@ async function execBot(){
                                 if(res[i].team1.name.toLowerCase() == replyTeamName || res[i].team2.name.toLowerCase() == replyTeamName){
                                     HLTV.getMatch({id:res[i].id}).then(result=>{
                                         switch(result.format){
-                                            case result.format.toLowerCase.trim().includes("bestof3"):
+                                            case result.format.toLowerCase().trim().includes("bestof3"):
                                                 indice = 3;
                                                 break;
-                                            case result.format.toLowerCase.trim().includes("bestof2"):
+                                            case result.format.toLowerCase().trim().includes("bestof2"):
                                                 indice = 2;
                                                 break;
-                                            case result.format.toLowerCase.trim().includes("bestof1"):
+                                            case result.format.toLowerCase().includes("bestof1"):
                                                 indice = 1;
                                                 break;
-                                            case result.format.toLowerCase.trim().includes("bestof5"):
+                                            case result.format.toLowerCase().trim().includes("bestof5"):
                                                 indice = 5;
                                                 break;
                                         }
