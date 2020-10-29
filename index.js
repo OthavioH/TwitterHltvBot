@@ -1,8 +1,10 @@
+require('newrelic');
 var twit = require('twit');
 var config = require('./config.js');
 const {HLTV} = require('hltv');
 const { createCanvas } = require('canvas');
 const fs = require('fs');
+
 
 const express = require('express');
 const app = express();
