@@ -89,9 +89,6 @@ async function execBot(){
                 }
                 else if(typeof tweet.text.split('#BotHltv')[1].trim() === 'string'){
                     HLTV.getMatches().then((res) => {
-
-                        matchEvent = "";
-                        isMatchLive = "";
         
                         for(var i = 0;i<=res.length;i++){
                             try{
@@ -114,6 +111,7 @@ async function execBot(){
                                         for(var i = 0;i<indice;i++){
                                             strMaps += `Map ${i+1}: ${result.maps[i].name} ${result.maps[i].result}\n`
                                         }
+                                        console.log("Mapas: "+strMaps);
                                         result.live == false ? isMatchLive = "no" : isMatchLive="yes"
                                         matchEvent=res[i].event.name;
             
@@ -125,12 +123,17 @@ async function execBot(){
                                                 auto_populate_reply_metadata:true,
                                                 status:`${result.team1.name} vs ${result.team2.name}\n\n`+
                                                 `Event: ${matchEvent}\n`+
-                                                `Maps:\n${strMaps}`+
+                                                `Maps:\n ${strMaps}`+
                                                 `Is it live now? R: ${isMatchLive}`
                                             },
                                             function (error,data,response){
                                                 if(error != undefined){
                                                     console.log("Erro no tweet\n"+error);
+                                                }
+                                                else {
+                                                    strMaps = "";
+                                                    matchEvent = "";
+                                                    isMatchLive = "";
                                                 }
                                             }
                                         );
@@ -158,6 +161,11 @@ async function execBot(){
                                 function (error,data,response){
                                     if(error != undefined){
                                         console.log("Erro no tweet de erro\n"+error);
+                                    }
+                                    else {
+                                        strMaps = "";
+                                        matchEvent = "";
+                                        isMatchLive = "";
                                     }
                                 }
                             );
