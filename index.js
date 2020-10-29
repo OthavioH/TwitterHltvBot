@@ -131,11 +131,11 @@ async function execBot(){
                                                 if(error != undefined){
                                                     console.log("Erro no tweet\n"+error);
                                                 }
-                                                else if(data!=undefined){
+                                                response.complete(()=>{
                                                     strMaps = "";
                                                     matchEvent = "";
                                                     isMatchLive = "";
-                                                }
+                                                }) 
                                             }
                                         );
                                     });
