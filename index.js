@@ -97,7 +97,7 @@ async function execBot(){
                                             case "Best of 1":
                                                 indice = 1;
                                                 break;
-                                            case "Best of 1":
+                                            default:
                                                 indice = 5;
                                                 break;
                                         }

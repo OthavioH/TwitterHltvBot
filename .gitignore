@@ -1,4 +1,6 @@
 node_modules
+start.bat
+*.bat
 'node_modules' 
 'node_modules' 
 'node_modules' 
