@@ -108,10 +108,10 @@ async function execBot(){
                                                 indice = 5;
                                                 break;
                                         }
+                                        console.log(result.maps);
                                         for(var i = 0;i<indice;i++){
                                             strMaps += `Map ${i+1}: ${result.maps[i].name} ${result.maps[i].result}\n`
                                         }
-                                        console.log("Mapas: "+strMaps);
                                         result.live == false ? isMatchLive = "no" : isMatchLive="yes"
                                         matchEvent=res[i].event.name;
             
