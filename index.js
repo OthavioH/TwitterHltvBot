@@ -4,6 +4,13 @@ const {HLTV} = require('hltv');
 const { createCanvas } = require('canvas');
 const fs = require('fs');
 
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+   console.log(`listening on ${port}`);
+});
+
 var Twitter =  new twit(config);
 
 const myHLTV = HLTV.createInstance({ loadPage: (url) => fetch(url) });
