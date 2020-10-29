@@ -286,8 +286,6 @@ async function connectHLTVBot(matchId){
                 console.log(dataLogUpdate);
                 console.log("\nALOOOOOOO\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                 console.log(dataScoreboard);
-                fs.writeFileSync('./LogUpdate.json',dataLogUpdate);
-                fs.writeFileSync('./ScoreboardUpdate.json',dataScoreboard);
 
                 if(isLive = true){
                     if(ctScore == 0 && tScore == 0){
