@@ -95,20 +95,21 @@ async function execBot(){
                                 if(res[i].team1.name.toLowerCase() == replyTeamName || res[i].team2.name.toLowerCase() == replyTeamName){
                                     HLTV.getMatch({id:res[i].id}).then(result=>{
                                         switch(result.format){
-                                            case result.format.includes("Best of 3"):
+                                            case result.format.toLowerCase.trim().includes("bestof3"):
                                                 indice = 3;
                                                 break;
-                                            case result.format.includes("Best of 2"):
+                                            case result.format.toLowerCase.trim().includes("bestof2"):
                                                 indice = 2;
                                                 break;
-                                            case result.format.includes("Best of 1"):
+                                            case result.format.toLowerCase.trim().includes("bestof1"):
                                                 indice = 1;
                                                 break;
-                                            case result.format.includes("Best of 5"):
+                                            case result.format.toLowerCase.trim().includes("bestof5"):
                                                 indice = 5;
                                                 break;
                                         }
                                         console.log(result.maps);
+                                        strMaps = "";
                                         for(var i = 0;i<indice;i++){
                                             strMaps += `Map ${i+1}: ${result.maps[i].name} ${result.maps[i].result}\n`
                                         }
@@ -129,11 +130,6 @@ async function execBot(){
                                             function (error,data,response){
                                                 if(error != undefined){
                                                     console.log("Erro no tweet\n"+error);
-                                                }
-                                                else {
-                                                    strMaps = "";
-                                                    matchEvent = "";
-                                                    isMatchLive = "";
                                                 }
                                             }
                                         );
@@ -161,11 +157,6 @@ async function execBot(){
                                 function (error,data,response){
                                     if(error != undefined){
                                         console.log("Erro no tweet de erro\n"+error);
-                                    }
-                                    else {
-                                        strMaps = "";
-                                        matchEvent = "";
-                                        isMatchLive = "";
                                     }
                                 }
                             );
