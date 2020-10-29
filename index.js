@@ -90,7 +90,6 @@ async function execBot(){
                 else if(typeof tweet.text.split('#BotHltv')[1].trim() === 'string'){
                     HLTV.getMatches().then((res) => {
 
-                        strMaps = "";
                         matchEvent = "";
                         isMatchLive = "";
         
