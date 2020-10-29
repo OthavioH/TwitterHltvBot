@@ -94,7 +94,7 @@ async function execBot(){
         
                         for(var i = 0;i<=res.length;i++){
                             try{
-                                if(res[i].team1.name.toLowerCase() == replyTeamName || res[i].team2.name == replyTeamName){
+                                if(res[i].team1.name.toLowerCase() == replyTeamName || res[i].team2.name.toLowerCase() == replyTeamName){
                                     HLTV.getMatch({id:res[i].id}).then(result=>{
                                         switch(result.format){
                                             case result.format.includes("Best of 3"):
