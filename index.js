@@ -52,6 +52,13 @@ var strMaps = "";
 var isMatchLive="";
 var matchEvent = "";
 var replyUserName = "";
+var scoreLimit1 = 15;
+var scoreLimit2 = 15;
+var isFinished = false;
+var limiteAnterior = 30;
+var dataScoreboard;
+var dataLogUpdate;
+var datas;
 
 var numberIndice=0;
 
@@ -78,7 +85,7 @@ async function execBot(){
                             status:`Match updated`
                         }
                     );
-                    connectHLTVBot();
+                    connectHLTVBot(matchId);
                 }
                 else if(typeof tweet.text.split('#BotHltv')[1].trim() === 'string'){
                     HLTV.getMatches().then((res) => {
@@ -193,7 +200,11 @@ async function execBot(){
 }
 // connectHLTVBot();
 
-async function connectHLTVBot(){
+async function connectHLTVBot(matchId){
+    scoreLimit1 = 15;
+    scoreLimit2 = 15;
+    isFinished = false;
+    limiteAnterior = 30;
     await HLTV.connectToScorebot({id:matchId,
         onDisconnect(){
             return console.log("Partida acabou");
@@ -207,11 +218,15 @@ async function connectHLTVBot(){
             mapName = data.mapName;
             isLive = data.live;
 
+            dataScoreboard = data;
+
         }, onLogUpdate:(data,done)=>{
             if(data.log[0].RoundStart != undefined){
                 strKillLog ="";
                 strKillLog2 = "";
             }
+
+            dataLogUpdate = data;
 
             if(data.log[0].Kill != undefined){
                 killerSide = data.log[0].Kill.killerSide;
@@ -266,12 +281,17 @@ async function connectHLTVBot(){
             }
 
             if(data.log[0].RoundEnd != undefined){
+
+
+                console.log(dataLogUpdate);
+                console.log("\nALOOOOOOO\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                console.log(dataScoreboard);
+                fs.writeFileSync('./LogUpdate.json',dataLogUpdate);
+                fs.writeFileSync('./ScoreboardUpdate.json',dataScoreboard);
+
                 if(isLive = true){
                     if(ctScore == 0 && tScore == 0){
                         return null;
-                    }
-                    else if(ctScore >= 15 && tScore >=15){
-                        makeTweet();
                     }
                     else{
                         makeTweet();
@@ -403,8 +423,24 @@ function verifyWin(ctTeamName,ctScore,tTeamName,tScore){
     else if(tScore == 16 && ctScore+tScore <=30){
         matchStatus = "⚪ THE MATCH HAS ENDED ⚪";
         return `\n\n✅${tTeamName} won the map!`;
-    }else if(ctScore + tScore >30){
-        console.log("The Match is in OT now");
+    }else if(ctScore + tScore > 30 && isFinished == false){
+        var i = 0;
+        if(isFinished == false){
+            if(ctScore + tScore >limiteAnterior && ctScore + tScore <=limiteAnterior+6){
+                if(ctScore == scoreLimit1+4){
+                    isFinished = true;
+                    return `\n\n✅${ctScore} won the map!`;
+                }
+                else if(tScore == scoreLimit1 +4){
+                    isFinished = true;
+                    return `\n\n✅${tTeamName} won the map!`;
+                }
+            }
+            else{
+                limiteAnterior = limiteAnterior +6;
+                scoreLimit1 = scoreLimit1+4;
+            }
+        }
         return "";
     }
     else {
