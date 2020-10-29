@@ -56,9 +56,6 @@ var scoreLimit1 = 15;
 var scoreLimit2 = 15;
 var isFinished = false;
 var limiteAnterior = 30;
-var dataScoreboard;
-var dataLogUpdate;
-var datas;
 
 var numberIndice=0;
 
