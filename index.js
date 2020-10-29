@@ -89,6 +89,10 @@ async function execBot(){
                 }
                 else if(typeof tweet.text.split('#BotHltv')[1].trim() === 'string'){
                     HLTV.getMatches().then((res) => {
+
+                        strMaps = "";
+                        matchEvent = "";
+                        isMatchLive = "";
         
                         for(var i = 0;i<=res.length;i++){
                             try{
@@ -129,11 +133,6 @@ async function execBot(){
                                                 if(error != undefined){
                                                     console.log("Erro no tweet\n"+error);
                                                 }
-                                                else {
-                                                    strMaps = "";
-                                                    matchEvent = "";
-                                                    isMatchLive = "";
-                                                }
                                             }
                                         );
                                     });
@@ -160,11 +159,6 @@ async function execBot(){
                                 function (error,data,response){
                                     if(error != undefined){
                                         console.log("Erro no tweet de erro\n"+error);
-                                    }
-                                    else {
-                                        strMaps = "";
-                                        matchEvent = "";
-                                        isMatchLive = "";
                                     }
                                 }
                             );
