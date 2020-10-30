@@ -113,7 +113,9 @@ async function execBot(){
                                         }
                                         result.live == false ? isMatchLive = "❌" : isMatchLive="✅"
                                         matchEvent=result.event.name;
-            
+                                        
+                                        console.log(result);
+
                                         Twitter.post(
                                             'statuses/update',
                                             {
@@ -236,18 +238,18 @@ async function connectHLTVBot(matchId){
                 else{
                     victimSide = '🔵';
                 }
-                strKillLog += `${killerSide}${killerNick} killed ${victimSide}${victimNick} with ${weapon}\n`;
+                strKillLog += `!${killerSide}${killerNick} killed ${victimSide}${victimNick} with ${weapon}.\n`;
                 
             }
             if(data.log[0].Suicide != undefined){
-                strKillLog += `${data.log[0].Suicide.playerNick} committed suicide\n`;
+                strKillLog += `!${data.log[0].Suicide.playerNick} committed suicide.\n`;
             }
             if(data.log[0].BombPlanted !=undefined){
-                strKillLog += `💣 has been planted\n`;
+                strKillLog += `!💣 has been planted.\n`;
 
             }
             if(data.log[0].BombDefused != undefined){
-                strKillLog += `✂️ has been defused\n`;
+                strKillLog += `!✂️ has been defused.\n`;
             }
 
             if(data.log[0].RoundEnd != undefined){
@@ -332,10 +334,13 @@ async function connectHLTVBot(matchId){
                     function postKillLogs(tweetId){
                 
                         if(strKillLog.length > 200){
+                            var i=200;
 
-                            strKillLog2 = strKillLog.slice(200);
-                            strKillLog = strKillLog.slice(0,200);
-                            console.log(strKillLog+"\n\n\n\n2\n"+strKillLog2);
+                            while(killLog.slice(i).substr(0,1)!="!"){
+                                i--;
+                            }
+                            killLog2 = killLog.slice(i);
+                            killLog = killLog.slice(0,i);
 
                             Twitter.post(
                                 'statuses/update',

@@ -23,6 +23,20 @@ console.log(matchId);
 var strlong = "Othavio Henrico";
 console.log(strlong.slice(0,7));
 
+var killLog = "!🟠MSL killed 🔵robiin with ak47 !🟠Lekr0 killed 🔵flameZ with inferno !🟠Lekr0 killed 🔵MiGHTYMAX with ak47 !💣 has been planted !🟠aizy killed 🔵Surreal with ak47 !🟠1aizy killed 🔵Surreal with ak47 !🟠2aizy killed 🔵Surreal with ak47 !🟠3aizy killed 🔵Surreal with ak47 !🟠4aizy killed 🔵Surreal with ak47";
+var killLog2;
+console.log(killLog.slice(201).substr(0,1));
+
+var i=200;
+
+while(killLog.slice(i).substr(0,1)!="!"){
+    i--;
+}
+killLog2 = killLog.slice(i);
+killLog = killLog.slice(0,i);
+
+console.log(killLog2);
+console.log(`\na\n${killLog}`);
 
 // stream.on('tweet',function(tweet){
 //   	tweetId = tweet.id_str;
