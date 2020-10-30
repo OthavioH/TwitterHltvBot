@@ -107,8 +107,7 @@ async function execBot(){
                                         }
                                         console.log(result.maps);
                                         for(var kikomeuteucu = 0;kikomeuteucu<mapas;kikomeuteucu++){
-                                            strMaps += `Map ${j+1}: ${result.maps[j].name} ${result.maps[j].result}\n`
-                                            console.log(`Map ${j+1}: ${result.maps[j].name} ${result.maps[j].result}\n`);
+                                            strMaps += `Map ${kikomeuteucu+1}: ${result.maps[kikomeuteucu].name} ${result.maps[kikomeuteucu].result}\n`
                                         }
                                         result.live == false ? isMatchLive = "no" : isMatchLive="yes"
                                         matchEvent=result.event.name;
