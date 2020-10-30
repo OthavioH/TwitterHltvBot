@@ -110,7 +110,7 @@ async function execBot(){
                                             strMaps += `Map ${j+1}: ${result.maps[j].name} ${result.maps[j].result}\n`
                                         }
                                         result.live == false ? isMatchLive = "no" : isMatchLive="yes"
-                                        matchEvent=res[i].event.name;
+                                        matchEvent=result.event.name;
             
                                         Twitter.post(
                                             'statuses/update',
