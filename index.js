@@ -286,7 +286,7 @@ async function connectHLTVBot(matchId){
                                     return null;
                                 }
                                 //OVERTIME
-                                else if(ctScore + tScore >= 30 && isFinished == false && frozen == false){
+                                else if(ctScore + tScore >= 30 && isFinished == false && frozen == false && data.log[0].RoundEnd.winner != 'DRAW'){
                                     if(RoundEnd.winner == "CT"){
                                         otCtScore++;
                                     }
