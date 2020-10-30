@@ -342,7 +342,9 @@ async function connectHLTVBot(matchId){
                                                         tweetId = data.id_str;
                                                         console.log("Terroristas ganharam - tweet enviado");
                                                         if(isFinished ==true){
-                                                            return null;
+                                                            setTimeout(()=>{
+                                                                done();
+                                                            },10000);
                                                         }else{
                                                             postKillLogs(tweetId);
                                                             console.log(`🔵 ${ctTeamName} - ${otTScore} x ${otTScore} - ${tTeamName} 🟠\n`);
@@ -368,7 +370,9 @@ async function connectHLTVBot(matchId){
                                                         tweetId = data.id_str;
                                                         console.log("Ninguém ganhou ainda - tweet enviado");
                                                         if(isFinished ==true){
-                                                            return null;
+                                                            setTimeout(()=>{
+                                                                done();
+                                                            },10000);
                                                         }else{
                                                             postKillLogs(tweetId);
                                                             console.log(`🔵 ${ctTeamName} - ${otTScore} x ${otTScore} - ${tTeamName} 🟠\n`);
@@ -412,7 +416,9 @@ async function connectHLTVBot(matchId){
                                             tweetId = data.id_str;
                                             console.log("Primeiro tweet enviado");
                                             if(isFinished ==true){
-                                                done();
+                                                setTimeout(()=>{
+                                                    done();
+                                                },10000);
                                             }else{
                                                 postKillLogs(tweetId);
                                                 console.log(`🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`);
