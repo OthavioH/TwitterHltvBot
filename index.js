@@ -240,7 +240,7 @@ async function connectHLTVBot(matchId){
                 else{
                     victimSide = '🔵';
                 }
-                if(strKillLog.length > 130){
+                if(strKillLog.length >260){
                     strKillLog2= strKillLog2 + `${killerSide}${killerNick} killed ${victimSide}${victimNick} with ${weapon}\n`;
                 }
                 else{
@@ -249,7 +249,7 @@ async function connectHLTVBot(matchId){
                 
             }
             if(data.log[0].Suicide != undefined){
-                if(strKillLog.length > 130){
+                if(strKillLog.length > 260){
                     strKillLog2= strKillLog2 + `${data.log[0].Suicide.playerNick} committed suicide\n`;
                 }
                 else{
@@ -257,7 +257,7 @@ async function connectHLTVBot(matchId){
                 }
             }
             if(data.log[0].BombPlanted !=undefined){
-                if(strKillLog.length > 130){
+                if(strKillLog.length > 260){
                     strKillLog2= strKillLog2 + `💣 has been planted\n`;
                 }
                 else{
@@ -265,7 +265,7 @@ async function connectHLTVBot(matchId){
                 }
             }
             if(data.log[0].BombDefused != undefined){
-                if(strKillLog.length > 130){
+                if(strKillLog.length > 260){
                     strKillLog2= strKillLog2 + `✂️ has been defused\n`;
                 }
                 else{
@@ -314,10 +314,47 @@ async function connectHLTVBot(matchId){
                             }
                         }
                     );
+
+                    function verifyWin(ctTeamName,ctScore,tTeamName,tScore){
+                        if(ctScore == 16 && ctScore+tScore <=30){
+                            matchStatus = "⚪ THE MATCH HAS ENDED ⚪";
+                            done();
+                            return `\n\n✅${ctTeamName} won the map!`;
+                        }
+                        else if(tScore == 16 && ctScore+tScore <=30){
+                            matchStatus = "⚪ THE MATCH HAS ENDED ⚪";
+                            done();
+                            return `\n\n✅${tTeamName} won the map!`;
+                        }else if(ctScore + tScore > 30 && isFinished == false){
+                            var i = 0;
+                            if(isFinished == false){
+                                if(ctScore + tScore >limiteAnterior && ctScore + tScore <=limiteAnterior+6){
+                                    if(ctScore == scoreLimit1+4){
+                                        isFinished = true;
+                                        done();
+                                        return `\n\n✅${ctScore} won the map!`;
+                                    }
+                                    else if(tScore == scoreLimit1 +4){
+                                        isFinished = true;
+                                        done();
+                                        return `\n\n✅${tTeamName} won the map!`;
+                                    }
+                                }
+                                else{
+                                    limiteAnterior = limiteAnterior +6;
+                                    scoreLimit1 = scoreLimit1+4;
+                                }
+                            }
+                            return "";
+                        }
+                        else {
+                            return "";
+                        }
+                    }
                     
                     function postKillLogs(tweetId){
                 
-                        if(strKillLog.length > 130){
+                        if(strKillLog.length > 260){
                             Twitter.post(
                                 'statuses/update',
                                 {
@@ -401,38 +438,7 @@ function verifyWinType(winType) {
     }
 }
 
-function verifyWin(ctTeamName,ctScore,tTeamName,tScore){
-    if(ctScore == 16 && ctScore+tScore <=30){
-        matchStatus = "⚪ THE MATCH HAS ENDED ⚪";
-        return `\n\n✅${ctTeamName} won the map!`;
-    }
-    else if(tScore == 16 && ctScore+tScore <=30){
-        matchStatus = "⚪ THE MATCH HAS ENDED ⚪";
-        return `\n\n✅${tTeamName} won the map!`;
-    }else if(ctScore + tScore > 30 && isFinished == false){
-        var i = 0;
-        if(isFinished == false){
-            if(ctScore + tScore >limiteAnterior && ctScore + tScore <=limiteAnterior+6){
-                if(ctScore == scoreLimit1+4){
-                    isFinished = true;
-                    return `\n\n✅${ctScore} won the map!`;
-                }
-                else if(tScore == scoreLimit1 +4){
-                    isFinished = true;
-                    return `\n\n✅${tTeamName} won the map!`;
-                }
-            }
-            else{
-                limiteAnterior = limiteAnterior +6;
-                scoreLimit1 = scoreLimit1+4;
-            }
-        }
-        return "";
-    }
-    else {
-        return "";
-    }
-}
+
 
 function tweetHighlightedPlayer(tweetId){
     HLTV.getMatch({id:matchId}).then(res =>{
