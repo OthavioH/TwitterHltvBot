@@ -272,11 +272,11 @@ async function connectHLTVBot(matchId){
                             strKillLog += `!${data.log[0].Suicide.playerNick} committed suicide\n`;
                         }
                         if(data.log[0].BombPlanted !=undefined){
-                            strKillLog += `!💣 has been planted\n`;
+                            strKillLog += `!💣 has been planted by ${data.log[0].BombPlanted.playerNick}\n`;
             
                         }
                         if(data.log[0].BombDefused != undefined){
-                            strKillLog += `!✂️ has been defused\n`;
+                            strKillLog += `!✂️ has been defused by ${data.log[0].BombPlanted.playerNick}\n`;
                         }
             
                         if(data.log[0].RoundEnd != undefined){
