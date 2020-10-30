@@ -56,6 +56,12 @@ var scoreLimit1 = 15;
 var scoreLimit2 = 15;
 var isFinished = false;
 var limiteAnterior = 30;
+var day;
+var month;
+var year;
+var minutes;
+var hours;
+var date;
 
 var numberIndice=0;
 
@@ -115,6 +121,12 @@ async function execBot(){
                                         matchEvent=result.event.name;
                                         
                                         console.log(result);
+                                        date = new Date(result.date);
+                                        day = date.getUTCDate().toString();
+                                        minutes = date.getUTCMinutes();
+                                        hours = date.getUTCHours();
+                                        year = date.getUTCFullYear();
+                                        month = date.getUTCMonth();
 
                                         Twitter.post(
                                             'statuses/update',
@@ -123,6 +135,7 @@ async function execBot(){
                                                 is_quote_status:true,
                                                 auto_populate_reply_metadata:true,
                                                 status:`${result.team1.name} vs ${result.team2.name}\n\n`+
+                                                `Date:${month}/${day}/${year} - ${hours}:${minutes} UTC`+
                                                 `Event: ${matchEvent}\n`+
                                                 `Format: ${result.format}\n`+
                                                 `Maps: \n${strMaps}`+

@@ -35,8 +35,15 @@ while(killLog.slice(i).substr(0,1)!="!"){
 killLog2 = killLog.slice(i);
 killLog = killLog.slice(0,i);
 
+var timestamp = 1604341800000;
+var data = new Date(timestamp);
+console.log(`${data.getUTCHours()-3}:${data.getUTCMinutes()} ${data.getUTCDate().toString()}`);
 console.log(killLog2);
 console.log(`\na\n${killLog}`);
+
+HLTV.getMatch({id:2344831}).then((res)=>{
+    console.log(res.date);
+});
 
 // stream.on('tweet',function(tweet){
 //   	tweetId = tweet.id_str;
