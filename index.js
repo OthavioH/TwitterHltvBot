@@ -95,25 +95,21 @@ async function execBot(){
                                 if(res[i].team1.name.toLowerCase() == replyTeamName || res[i].team2.name.toLowerCase() == replyTeamName){
                                     HLTV.getMatch({id:res[i].id}).then(result=>{
 
-                                        
-
-                                        switch(result.format){
-                                            case result.format =="Best of 3":
-                                                mapas = 3;
-                                                break;
-                                            case result.format =="Best of 2":
-                                                mapas = 2;
-                                                break;
-                                            case result.format =="Best of 1":
-                                                mapas = 1;
-                                                break;
-                                            case result.format =="Best of 5":
-                                                mapas = 5;
-                                                break;
+                                        if(result.format =="Best of 3"){
+                                            mapas = 3;
+                                        }
+                                        else if(result.format =="Best of 2"){
+                                            mapas = 2;
+                                        }
+                                        else if(result.format =="Best of 1"){
+                                            mapas = 1;
+                                        }
+                                        else{
+                                            mapas = 5;
                                         }
                                         console.log(result.maps);
                                         for(var k = 0;k<mapas;k++){
-                                            strMaps += `Map ${k+1}: ${result.maps[k].name} ${result.maps[k].result}\n`
+                                            strMaps += `Map ${(k)+1}: ${result.maps[k].name} ${result.maps[k].result}\n`
                                         }
                                         result.live == false ? isMatchLive = "❌" : isMatchLive="✔️"
                                         matchEvent=result.event.name;
