@@ -135,7 +135,7 @@ async function execBot(){
                                                 is_quote_status:true,
                                                 auto_populate_reply_metadata:true,
                                                 status:`${result.team1.name} vs ${result.team2.name}\n\n`+
-                                                `Date:${month}/${day}/${year} - ${hours}:${minutes} UTC`+
+                                                `Date: ${month}/${day}/${year} - ${hours}:${minutes} UTC-3\n`+
                                                 `Event: ${matchEvent}\n`+
                                                 `Format: ${result.format}\n`+
                                                 `Maps: \n${strMaps}`+
