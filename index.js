@@ -129,7 +129,7 @@ async function execBot(){
                                         minutes = date.getUTCMinutes();
                                         hours = date.getUTCHours()-3;
                                         year = date.getUTCFullYear();
-                                        month = date.getMonth();
+                                        month = date.getMonth()+1;
 
                                         Twitter.post(
                                             'statuses/update',

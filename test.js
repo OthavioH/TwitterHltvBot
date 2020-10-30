@@ -36,9 +36,9 @@ while(killLog.slice(i).substr(0,1)!="!"){
 killLog2 = killLog.slice(i);
 killLog = killLog.slice(0,i);
 
-var timestamp = 2344830;
-var data = new Date(timestamp);
-console.log(`${data.getUTCHours()}:${data.getUTCMinutes()} ${data.getUTCDate().toString()}`);
+var timestamp = 1604082600000;
+var date = new Date(timestamp);
+console.log(`${date.getUTCHours()}:${date.getUTCMinutes()} ${date.getUTCDate().toString()}`);
 console.log(killLog2);
 console.log(`\na\n${killLog}`);
 
@@ -270,10 +270,10 @@ var getMatch = {
     startingCt: 7969,
     startingT: 7244
   }
-HLTV.connectToScorebot({id:2345099,onScoreboardUpdate:(data,done)=>{
-    console.log(data.live);
-    done();
-}});
+// HLTV.connectToScorebot({id:2345099,onScoreboardUpdate:(data,done)=>{
+//     console.log(data.live);
+//     done();
+// }});
 
 var ctScore = getMatch.ctTeamScore;
 var tScore = getMatch.tTeamScore;
