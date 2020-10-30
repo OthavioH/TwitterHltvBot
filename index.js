@@ -265,18 +265,18 @@ async function connectHLTVBot(matchId){
                             else{
                                 victimSide = '🔵';
                             }
-                            strKillLog += `!${killerSide}${killerNick} killed ${victimSide}${victimNick} with ${weapon}.\n`;
+                            strKillLog += `!${killerSide}${killerNick} killed ${victimSide}${victimNick} with ${weapon}\n`;
                             
                         }
                         if(data.log[0].Suicide != undefined){
-                            strKillLog += `!${data.log[0].Suicide.playerNick} committed suicide.\n`;
+                            strKillLog += `!${data.log[0].Suicide.playerNick} committed suicide\n`;
                         }
                         if(data.log[0].BombPlanted !=undefined){
-                            strKillLog += `!💣 has been planted.\n`;
+                            strKillLog += `!💣 has been planted\n`;
             
                         }
                         if(data.log[0].BombDefused != undefined){
-                            strKillLog += `!✂️ has been defused.\n`;
+                            strKillLog += `!✂️ has been defused\n`;
                         }
             
                         if(data.log[0].RoundEnd != undefined){
