@@ -47,7 +47,7 @@ const height = 1080;
 var canvas;
 var replyTeamName;
 var tweetReplyId;
-var mapas = 0;
+var mapas = 1;
 var strMaps = "";
 var isMatchLive="";
 var matchEvent = "";
@@ -92,16 +92,16 @@ async function execBot(){
                                 if(res[i].team1.name.toLowerCase() == replyTeamName || res[i].team2.name.toLowerCase() == replyTeamName){
                                     HLTV.getMatch({id:res[i].id}).then(result=>{
                                         switch(result.format){
-                                            case result.format.toLowerCase().trim().includes("bestof3"):
+                                            case result.format =="Best of 3":
                                                 mapas = 3;
                                                 break;
-                                            case result.format.toLowerCase().trim().includes("bestof2"):
+                                            case result.format =="Best of 2":
                                                 mapas = 2;
                                                 break;
-                                            case result.format.toLowerCase().includes("bestof1"):
+                                            case result.format =="Best of 1":
                                                 mapas = 1;
                                                 break;
-                                            case result.format.toLowerCase().trim().includes("bestof5"):
+                                            case result.format =="Best of 5":
                                                 mapas = 5;
                                                 break;
                                         }
