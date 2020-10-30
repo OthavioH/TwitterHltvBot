@@ -47,7 +47,7 @@ const height = 1080;
 var canvas;
 var replyTeamName;
 var tweetReplyId;
-var indice = 0;
+var mapas = 0;
 var strMaps = "";
 var isMatchLive="";
 var matchEvent = "";
@@ -93,20 +93,20 @@ async function execBot(){
                                     HLTV.getMatch({id:res[i].id}).then(result=>{
                                         switch(result.format){
                                             case result.format.toLowerCase().trim().includes("bestof3"):
-                                                indice = 3;
+                                                mapas = 3;
                                                 break;
                                             case result.format.toLowerCase().trim().includes("bestof2"):
-                                                indice = 2;
+                                                mapas = 2;
                                                 break;
                                             case result.format.toLowerCase().includes("bestof1"):
-                                                indice = 1;
+                                                mapas = 1;
                                                 break;
                                             case result.format.toLowerCase().trim().includes("bestof5"):
-                                                indice = 5;
+                                                mapas = 5;
                                                 break;
                                         }
                                         console.log(result.maps);
-                                        for(var j = 0;j<indice;j++){
+                                        for(var kikomeuteucu = 0;kikomeuteucu<mapas;kikomeuteucu++){
                                             strMaps += `Map ${j+1}: ${result.maps[j].name} ${result.maps[j].result}\n`
                                             console.log(`Map ${j+1}: ${result.maps[j].name} ${result.maps[j].result}\n`);
                                         }
@@ -121,6 +121,7 @@ async function execBot(){
                                                 auto_populate_reply_metadata:true,
                                                 status:`${result.team1.name} vs ${result.team2.name}\n\n`+
                                                 `Event: ${matchEvent}\n`+
+                                                `Format: ${result.format}\n`+
                                                 `Maps: \n ${strMaps}`+
                                                 `Is it live now? R: ${isMatchLive}`
                                             },
