@@ -91,6 +91,9 @@ async function execBot(){
                             try{
                                 if(res[i].team1.name.toLowerCase() == replyTeamName || res[i].team2.name.toLowerCase() == replyTeamName){
                                     HLTV.getMatch({id:res[i].id}).then(result=>{
+
+                                        strMaps = "";
+
                                         switch(result.format){
                                             case result.format =="Best of 3":
                                                 mapas = 3;
@@ -143,6 +146,9 @@ async function execBot(){
                             
                         }
                         if(numberIndice >=0){
+                            strMaps="";
+                            isMatchLive = "";
+
                             Twitter.post(
                                 'statuses/update',
                                 {
