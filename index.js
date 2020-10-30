@@ -351,36 +351,37 @@ async function connectHLTVBot(matchId){
                                                 }
                                             );
                                         }
+                                        else{
+                                            Twitter.post(
+                                                'statuses/update',
+                                                {
+                                                    status:`🔵 ${ctTeamName} - ${otCtScore} x ${otTScore} - ${tTeamName} 🟠\n`+
+                                                    `Map: ${mapName}\n\n`+
+                                                    `📝Round Winner: ${data.log[0].RoundEnd.winner}\n`+
+                                                    `📝Win type: ${verifyWinType(data.log[0].RoundEnd.winType)}`
+                                                },
+                                                function (err,data,response){
+                                                    if(err != undefined){
+                                                        console.log(err);
+                                                    }
+                                                    else{
+                                                        tweetId = data.id_str;
+                                                        console.log("Ninguém ganhou ainda - tweet enviado");
+                                                        if(isFinished ==true){
+                                                            return null;
+                                                        }else{
+                                                            postKillLogs(tweetId);
+                                                            console.log(`🔵 ${ctTeamName} - ${otTScore} x ${otTScore} - ${tTeamName} 🟠\n`);
+                                                        }
+                                                    }
+                                                }
+                                            );
+                                        }
                                     }
                                     else{
                                         limiteAnterior = limiteAnterior +6;
                                         scoreLimit1 = scoreLimit1+3;
                                     }
-
-                                    Twitter.post(
-                                        'statuses/update',
-                                        {
-                                            status:`🔵 ${ctTeamName} - ${otCtScore} x ${otTScore} - ${tTeamName} 🟠\n`+
-                                            `Map: ${mapName}\n\n`+
-                                            `📝Round Winner: ${data.log[0].RoundEnd.winner}\n`+
-                                            `📝Win type: ${verifyWinType(data.log[0].RoundEnd.winType)}`
-                                        },
-                                        function (err,data,response){
-                                            if(err != undefined){
-                                                console.log(err);
-                                            }
-                                            else{
-                                                tweetId = data.id_str;
-                                                console.log("Ninguém ganhou ainda - tweet enviado");
-                                                if(isFinished ==true){
-                                                    return null;
-                                                }else{
-                                                    postKillLogs(tweetId);
-                                                    console.log(`🔵 ${ctTeamName} - ${otTScore} x ${otTScore} - ${tTeamName} 🟠\n`);
-                                                }
-                                            }
-                                        }
-                                    );
 
                                     return console.log("CT: " +otCtScore+" vs " +" T: "+ otTScore);
                                 }
@@ -389,8 +390,8 @@ async function connectHLTVBot(matchId){
                                     makeTweet();
                                 }
                             }
-                            else{
-                                return false;
+                            else {
+                                return null;
                             }
             
                             function makeTweet(){
@@ -411,7 +412,7 @@ async function connectHLTVBot(matchId){
                                             tweetId = data.id_str;
                                             console.log("Primeiro tweet enviado");
                                             if(isFinished ==true){
-                                                return null;
+                                                done();
                                             }else{
                                                 postKillLogs(tweetId);
                                                 console.log(`🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`);
@@ -423,12 +424,10 @@ async function connectHLTVBot(matchId){
                                 function verifyWin(ctTeamName,ctScore,tTeamName,tScore){
                                     if(ctScore == 16 && ctScore+tScore <=30){
                                         isFinished = true;
-                                        done();
                                         return `\n\n✅${ctTeamName} won the map!`;
                                     }
                                     else if(tScore == 16 && ctScore+tScore <=30){
                                         isFinished = true;
-                                        done();
                                         return `\n\n✅${tTeamName} won the map!`;
                                     }
                                     else {
