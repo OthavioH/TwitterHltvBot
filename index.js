@@ -336,11 +336,11 @@ async function connectHLTVBot(matchId){
                         if(strKillLog.length > 200){
                             var i=200;
 
-                            while(killLog.slice(i).substr(0,1)!="!"){
+                            while(strKillLog.slice(i).substr(0,1)!="!"){
                                 i--;
                             }
-                            killLog2 = killLog.slice(i);
-                            killLog = killLog.slice(0,i);
+                            strKillLog2 = killLog.slice(i);
+                            strKillLog = killLog.slice(0,i);
 
                             Twitter.post(
                                 'statuses/update',
