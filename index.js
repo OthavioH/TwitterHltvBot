@@ -363,7 +363,7 @@ async function connectHLTVBot(matchId){
                                             status:`🔵 ${ctTeamName} - ${otCtScore} x ${otTScore} - ${tTeamName} 🟠\n`+
                                             `Map: ${mapName}\n\n`+
                                             `📝Round Winner: ${data.log[0].RoundEnd.winner}\n`+
-                                            `📝Win type: ${verifyWinType(data.log[0].RoundEnd.winType)}`+
+                                            `📝Win type: ${verifyWinType(data.log[0].RoundEnd.winType)}`
                                         },
                                         function (err,data,response){
                                             if(err != undefined){

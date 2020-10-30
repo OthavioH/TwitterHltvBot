@@ -270,10 +270,10 @@ var getMatch = {
     startingCt: 7969,
     startingT: 7244
   }
-// HLTV.connectToScorebot({id:2345099,onScoreboardUpdate:(data,done)=>{
-//     console.log(data);
-//     done();
-// }});
+HLTV.connectToScorebot({id:2345099,onScoreboardUpdate:(data,done)=>{
+    console.log(data.live);
+    done();
+}});
 
 var ctScore = getMatch.ctTeamScore;
 var tScore = getMatch.tTeamScore;
