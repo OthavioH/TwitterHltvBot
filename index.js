@@ -123,7 +123,7 @@ async function execBot(){
                                                 status:`${result.team1.name} vs ${result.team2.name}\n\n`+
                                                 `Event: ${matchEvent}\n`+
                                                 `Format: ${result.format}\n`+
-                                                `Maps: \n ${strMaps}`+
+                                                `Maps: \n${strMaps}`+
                                                 `Is it live now? R: ${isMatchLive}`
                                             },
                                             function (error,data,response){
