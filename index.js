@@ -84,7 +84,7 @@ async function execBot(){
                     );
                     connectHLTVBot(matchId);
                 }
-                else if(typeof tweet.text.split('#BotHltv')[1].trim() === 'string'){
+                else {
                     HLTV.getMatches().then((res) => {
         
                         for(var i = 0;i<=res.length;i++){
