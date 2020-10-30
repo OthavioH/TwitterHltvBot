@@ -115,7 +115,7 @@ async function execBot(){
                                         for(var k = 0;k<mapas;k++){
                                             strMaps += `Map ${k+1}: ${result.maps[k].name} ${result.maps[k].result}\n`
                                         }
-                                        result.live == false ? isMatchLive = "no" : isMatchLive="yes"
+                                        result.live == false ? isMatchLive = "❌" : isMatchLive="✔️"
                                         matchEvent=result.event.name;
             
                                         Twitter.post(
