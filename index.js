@@ -236,37 +236,18 @@ async function connectHLTVBot(matchId){
                 else{
                     victimSide = '🔵';
                 }
-                if(strKillLog.length >260){
-                    strKillLog2= strKillLog2 + `${killerSide}${killerNick} killed ${victimSide}${victimNick} with ${weapon}\n`;
-                }
-                else{
-                    strKillLog += `${killerSide}${killerNick} killed ${victimSide}${victimNick} with ${weapon}\n`;
-                }
+                strKillLog += `${killerSide}${killerNick} killed ${victimSide}${victimNick} with ${weapon}\n`;
                 
             }
             if(data.log[0].Suicide != undefined){
-                if(strKillLog.length > 260){
-                    strKillLog2= strKillLog2 + `${data.log[0].Suicide.playerNick} committed suicide\n`;
-                }
-                else{
-                    strKillLog += `${data.log[0].Suicide.playerNick} committed suicide\n`;
-                }
+                strKillLog += `${data.log[0].Suicide.playerNick} committed suicide\n`;
             }
             if(data.log[0].BombPlanted !=undefined){
-                if(strKillLog.length > 260){
-                    strKillLog2= strKillLog2 + `💣 has been planted\n`;
-                }
-                else{
-                    strKillLog += `💣 has been planted\n`;
-                }
+                strKillLog += `💣 has been planted\n`;
+
             }
             if(data.log[0].BombDefused != undefined){
-                if(strKillLog.length > 260){
-                    strKillLog2= strKillLog2 + `✂️ has been defused\n`;
-                }
-                else{
-                    strKillLog += `✂️ has been defused\n`;
-                }
+                strKillLog += `✂️ has been defused\n`;
             }
 
             if(data.log[0].RoundEnd != undefined){
@@ -350,7 +331,11 @@ async function connectHLTVBot(matchId){
                     
                     function postKillLogs(tweetId){
                 
-                        if(strKillLog.length > 260){
+                        if(strKillLog.length > 200){
+
+                            strKillLog2 = strKillLog.slice(200);
+                            strKillLog = strKillLog.slice(0,200);
+
                             Twitter.post(
                                 'statuses/update',
                                 {
