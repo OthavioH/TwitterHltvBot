@@ -276,7 +276,7 @@ async function connectHLTVBot(matchId){
             
                         }
                         if(data.log[0].BombDefused != undefined){
-                            strKillLog += `!✂️ has been defused by ${data.log[0].BombPlanted.playerNick}\n`;
+                            strKillLog += `!✂️ has been defused by ${data.log[0].BombDefused.playerNick}\n`;
                         }
             
                         if(data.log[0].RoundEnd != undefined){
