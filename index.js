@@ -62,7 +62,7 @@ var numberIndice=0;
 execBot();
 
 async function execBot(){
-    await stream.on('tweet',function(tweet){
+    stream.on('tweet',function(tweet){
         try{
             tweetReplyId = tweet.id_str;
             replyUserName = tweet.user.screen_name;
