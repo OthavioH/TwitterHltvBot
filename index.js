@@ -111,7 +111,7 @@ async function execBot(){
                                         for(var k = 0;k<mapas;k++){
                                             strMaps += `Map ${(k)+1}: ${result.maps[k].name} ${result.maps[k].result}\n`
                                         }
-                                        result.live == false ? isMatchLive = "❌" : isMatchLive="✔️"
+                                        result.live == false ? isMatchLive = "❌" : isMatchLive="✅"
                                         matchEvent=result.event.name;
             
                                         Twitter.post(
@@ -335,6 +335,7 @@ async function connectHLTVBot(matchId){
 
                             strKillLog2 = strKillLog.slice(200);
                             strKillLog = strKillLog.slice(0,200);
+                            console.log(strKillLog+"\n\n\n\n2\n"+strKillLog2);
 
                             Twitter.post(
                                 'statuses/update',
