@@ -108,6 +108,7 @@ async function execBot(){
                                         console.log(result.maps);
                                         for(var j = 0;j<indice;j++){
                                             strMaps += `Map ${j+1}: ${result.maps[j].name} ${result.maps[j].result}\n`
+                                            console.log(`Map ${j+1}: ${result.maps[j].name} ${result.maps[j].result}\n`);
                                         }
                                         result.live == false ? isMatchLive = "no" : isMatchLive="yes"
                                         matchEvent=result.event.name;
@@ -120,7 +121,7 @@ async function execBot(){
                                                 auto_populate_reply_metadata:true,
                                                 status:`${result.team1.name} vs ${result.team2.name}\n\n`+
                                                 `Event: ${matchEvent}\n`+
-                                                `Maps: ${strMaps}`+
+                                                `Maps: \n ${strMaps}`+
                                                 `Is it live now? R: ${isMatchLive}`
                                             },
                                             function (error,data,response){
