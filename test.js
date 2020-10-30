@@ -35,9 +35,9 @@ while(killLog.slice(i).substr(0,1)!="!"){
 killLog2 = killLog.slice(i);
 killLog = killLog.slice(0,i);
 
-var timestamp = 1604341800000;
+var timestamp = 2344830;
 var data = new Date(timestamp);
-console.log(`${data.getUTCHours()-3}:${data.getUTCMinutes()} ${data.getUTCDate().toString()}`);
+console.log(`${data.getUTCHours()}:${data.getUTCMinutes()} ${data.getUTCDate().toString()}`);
 console.log(killLog2);
 console.log(`\na\n${killLog}`);
 

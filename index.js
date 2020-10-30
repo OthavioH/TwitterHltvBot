@@ -124,7 +124,7 @@ async function execBot(){
                                         date = new Date(result.date);
                                         day = date.getUTCDate().toString();
                                         minutes = date.getUTCMinutes();
-                                        hours = date.getUTCHours();
+                                        hours = date.getUTCHours()-3;
                                         year = date.getUTCFullYear();
                                         month = date.getUTCMonth();
 
