@@ -120,7 +120,7 @@ async function execBot(){
                                                 auto_populate_reply_metadata:true,
                                                 status:`${result.team1.name} vs ${result.team2.name}\n\n`+
                                                 `Event: ${matchEvent}\n`+
-                                                `Maps:\n ${strMaps}`+
+                                                `Maps: ${strMaps}`+
                                                 `Is it live now? R: ${isMatchLive}`
                                             },
                                             function (error,data,response){
