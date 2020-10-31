@@ -280,8 +280,8 @@ async function connectHLTVBot(matchId){
         
                     if(data.log[0].RoundEnd != undefined){
 
-                        ctScore = data.log[0].RoundEnd.ctTeamScore;
-                        tScore = data.log[0].RoundEnd.tTeamScore;
+                        ctScore = data.log[0].RoundEnd.counterTerroristTeamScore;
+                        tScore = data.log[0].RoundEnd.terroristScore;
 
                         if(ctScore == 0 && tScore == 0){
                             return null;
