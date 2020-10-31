@@ -290,29 +290,6 @@ async function connectHLTVBot(matchId){
                         else {
                             makeTweet();
                         }
-
-                        function makeTweetWin(winnerTeamName,ctScore,tScore){
-                            Twitter.post(
-                                'statuses/update',
-                                {
-                                    status:`The match has ended\n`+
-                                    `🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`+
-                                    `Map: ${mapName}\n\n`+
-                                    `📝Round Winner: ${data.log[0].RoundEnd.winner}\n`+
-                                    `📝Win type: ${verifyWinType(data.log[0].RoundEnd.winType)}`+
-                                    `\n\n✅${winnerTeamName} won the map!`
-                                },
-                                function (err,data,response){
-                                    if(err != undefined){
-                                        console.log(err);
-                                    }
-                                    else{
-                                        tweetId = data.id_str;
-                                        console.log("Tweet de win enviado");
-                                    }
-                                }
-                            );
-                        }
         
                         function makeTweet(){
                             Twitter.post(
@@ -338,6 +315,27 @@ async function connectHLTVBot(matchId){
                                     }
                                 }
                             );
+
+                            function makeTweetWin(winnerTeamName,ctScore,tScore){
+                                Twitter.post(
+                                    'statuses/update',
+                                    {
+                                        status:`The match has ended\n`+
+                                        `🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`+
+                                        `Map: ${mapName}\n\n`+
+                                        `✅${winnerTeamName} won the map!`
+                                    },
+                                    function (err,data,response){
+                                        if(err != undefined){
+                                            console.log(err);
+                                        }
+                                        else{
+                                            tweetId = data.id_str;
+                                            console.log("Tweet de win enviado");
+                                        }
+                                    }
+                                );
+                            }
         
                             function verifyWin(ctTeamName,ctScore,tTeamName,tScore){
                                 if(ctScore == 16 && ctScore+tScore <=30){
