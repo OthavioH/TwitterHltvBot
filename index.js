@@ -313,6 +313,9 @@ async function connectHLTVBot(matchId){
                                     else{
                                         tweetId = data.id_str;
                                         console.log("Tweet de win enviado");
+                                        setTimeout(()=>{
+                                            done();
+                                        },6000);
                                     }
                                 }
                             );
