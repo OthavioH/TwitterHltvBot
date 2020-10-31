@@ -311,6 +311,112 @@ if(ctScore + tScore >= 30 && isFinished == false && getMatch.frozen == false){
     return console.log("CT: " +otCtScore+" vs " +" T: "+ otTScore);
 }
 
+//APENAS GUARDANDO CÓDIGO
+
+//    else if(ctScore + tScore >= 30 && isFinished == false && frozen == false && data.log[0].RoundEnd.winner != 'DRAW'){
+  //     if(RoundEnd.winner == "CT"){
+  //         otCtScore++;
+  //     }
+  //     else if(RoundEnd.winner == "TERRORIST"){
+  //         otTScore++;
+  //     }
+      
+  //     if(otCtScore + otTScore >limiteAnterior && otCtScore + otTScore <=limiteAnterior+6){
+  //         if(otCtScore == scoreLimit1){
+  //             isFinished = true;
+  //             Twitter.post(
+  //                 'statuses/update',
+  //                 {
+  //                     status:`🔵 ${ctTeamName} - ${otCtScore} x ${otTScore} - ${tTeamName} 🟠\n`+
+  //                     `Map: ${mapName}\n\n`+
+  //                     `📝Round Winner: ${data.log[0].RoundEnd.winner}\n`+
+  //                     `📝Win type: ${verifyWinType(data.log[0].RoundEnd.winType)}`+
+  //                     `\n\n✅${ctTeamName} won the map!`
+  //                 },
+  //                 function (err,data,response){
+  //                     if(err != undefined){
+  //                         console.log(err);
+  //                     }
+  //                     else{
+  //                         tweetId = data.id_str;
+  //                         console.log("CTs ganharam - tweet enviado");
+  //                         if(isFinished ==true){
+  //                             return null;
+  //                         }else{
+  //                             postKillLogs(tweetId);
+  //                             console.log(`🔵 ${ctTeamName} - ${otTScore} x ${otTScore} - ${tTeamName} 🟠\n`);
+  //                         }
+  //                     }
+  //                 }
+  //             );
+  //         }
+  //         else if(otTScore == scoreLimit1){
+  //             isFinished = true;
+  //             Twitter.post(
+  //                 'statuses/update',
+  //                 {
+  //                     status:`🔵 ${ctTeamName} - ${otCtScore} x ${otTScore} - ${tTeamName} 🟠\n`+
+  //                     `Map: ${mapName}\n\n`+
+  //                     `📝Round Winner: ${data.log[0].RoundEnd.winner}\n`+
+  //                     `📝Win type: ${verifyWinType(data.log[0].RoundEnd.winType)}`+
+  //                     `\n\n✅${tTeamName} won the map!`
+  //                 },
+  //                 function (err,data,response){
+  //                     if(err != undefined){
+  //                         console.log(err);
+  //                     }
+  //                     else{
+  //                         tweetId = data.id_str;
+  //                         console.log("Terroristas ganharam - tweet enviado");
+  //                         if(isFinished ==true){
+  //                             setTimeout(()=>{
+  //                                 done();
+  //                             },10000);
+  //                         }else{
+  //                             postKillLogs(tweetId);
+  //                             console.log(`🔵 ${ctTeamName} - ${otTScore} x ${otTScore} - ${tTeamName} 🟠\n`);
+  //                         }
+  //                     }
+  //                 }
+  //             );
+  //         }
+  //         else{
+  //             Twitter.post(
+  //                 'statuses/update',
+  //                 {
+  //                     status:`🔵 ${ctTeamName} - ${otCtScore} x ${otTScore} - ${tTeamName} 🟠\n`+
+  //                     `Map: ${mapName}\n\n`+
+  //                     `📝Round Winner: ${data.log[0].RoundEnd.winner}\n`+
+  //                     `📝Win type: ${verifyWinType(data.log[0].RoundEnd.winType)}`
+  //                 },
+  //                 function (err,data,response){
+  //                     if(err != undefined){
+  //                         console.log(err);
+  //                     }
+  //                     else{
+  //                         tweetId = data.id_str;
+  //                         console.log("Ninguém ganhou ainda - tweet enviado");
+  //                         if(isFinished ==true){
+  //                             setTimeout(()=>{
+  //                                 done();
+  //                             },10000);
+  //                         }else{
+  //                             postKillLogs(tweetId);
+  //                             console.log(`🔵 ${ctTeamName} - ${otTScore} x ${otTScore} - ${tTeamName} 🟠\n`);
+  //                         }
+  //                     }
+  //                 }
+  //             );
+  //         }
+  //     }
+  //     else{
+  //         limiteAnterior = limiteAnterior +6;
+  //         scoreLimit1 = scoreLimit1+3;
+  //     }
+
+  //     return console.log("CT: " +otCtScore+" vs " +" T: "+ otTScore);
+  // }
+
 // stream.on('tweet',function(tweet){
 //   	tweetId = tweet.id_str;
 // 	matchId = tweet.text.split('#BotHltv')[1].trim();

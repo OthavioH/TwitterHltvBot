@@ -286,7 +286,7 @@ async function connectHLTVBot(matchId){
                                     return null;
                                 }
                                 //REGULAR TIME
-                                else{
+                                else if(data.log[0].RoundEnd.winner != 'DRAW' && frozen == false){
                                     makeTweet();
                                 }
                             }
@@ -331,6 +331,22 @@ async function connectHLTVBot(matchId){
                                     else if(tScore == 16 && ctScore+tScore <=30){
                                         isFinished = true;
                                         return `\n\n✅${tTeamName} won the map!`;
+                                    }
+                                    else if(ctScore + tScore>30){
+                                        if(ctScore + tScore >limiteAnterior && ctScore + tScore <=limiteAnterior+6){
+                                            if(ctScore == scoreLimit1){
+                                                isFinished = true;
+                                                return `\n\n✅${ctTeamName} won the map!`;
+                                            }
+                                            else if(tScore == scoreLimit1){
+                                                isFinished = true;
+                                                return `\n\n✅${tTeamName} won the map!`;
+                                            }
+                                        }
+                                        else{
+                                            limiteAnterior = limiteAnterior +6;
+                                            scoreLimit1 = scoreLimit1+3;
+                                        }
                                     }
                                     else {
                                         return "";
