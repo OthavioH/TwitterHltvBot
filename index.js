@@ -378,6 +378,7 @@ async function connectHLTVBot(matchId){
                                     }
                                     strKillLog2 = strKillLog.slice(i);
                                     strKillLog = strKillLog.slice(0,i);
+                                    console.log(strKillLog);
         
                                     Twitter.post(
                                         'statuses/update',
