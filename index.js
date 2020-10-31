@@ -326,12 +326,10 @@ async function connectHLTVBot(matchId){
             
                                 function verifyWin(ctTeamName,ctScore,tTeamName,tScore){
                                     if(ctScore == 16 && ctScore+tScore <=30){
-                                        isFinished = true;
                                         console.log("Não chegou no OT e o CT ganhou");
                                         return `\n\n✅${ctTeamName} won the map!`;
                                     }
                                     else if(tScore == 16 && ctScore+tScore <=30){
-                                        isFinished = true;
                                         console.log("Não chegou no OT e o TR ganhou");
                                         return `\n\n✅${tTeamName} won the map!`;
                                     }
