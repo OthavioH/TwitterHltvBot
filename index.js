@@ -221,6 +221,8 @@ async function connectHLTVBot(matchId){
     tScore = 0;
     await HLTV.connectToScorebot({id:matchId,
         onDisconnect(){
+            strKillLog = "";
+            strKillLog2 = "";
             return console.log("Bot desconectado do Scorebot");
         },
         onScoreboardUpdate: (data,done)=>{
