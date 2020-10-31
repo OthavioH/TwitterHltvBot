@@ -81,17 +81,36 @@ async function execBot(){
                     return null;
                 }
                 else if(tweet.user.screen_name == "FireXter" && tweet.text.split('#BotHltv')[1].trim() +1 >3){
-                    matchId = tweet.text.split('#BotHltv')[1].trim();
-                    Twitter.post(
-                        'statuses/update',
-                        {
-                            in_reply_to_status_id:tweetReplyId,
-                            is_quote_status:true,
-                            auto_populate_reply_metadata:true,
-                            status:`Match updated`
-                        }
-                    );
-                    connectHLTVBot(matchId);
+                    if(matchId !=""){
+                        HLTV.connectToScorebot({id:matchId,onConnect:(data,done)=>{
+                            done();
+                        }});
+                        matchId = tweet.text.split('#BotHltv')[1].trim();
+                        Twitter.post(
+                            'statuses/update',
+                            {
+                                in_reply_to_status_id:tweetReplyId,
+                                is_quote_status:true,
+                                auto_populate_reply_metadata:true,
+                                status:`Match updated`
+                            }
+                        );
+                        connectHLTVBot(matchId);
+                    }
+                    else{
+                        matchId = tweet.text.split('#BotHltv')[1].trim();
+                        Twitter.post(
+                            'statuses/update',
+                            {
+                                in_reply_to_status_id:tweetReplyId,
+                                is_quote_status:true,
+                                auto_populate_reply_metadata:true,
+                                status:`Match updated`
+                            }
+                        );
+                        connectHLTVBot(matchId);
+                    }
+                    
                     
                 }
                 else {
@@ -223,7 +242,7 @@ async function connectHLTVBot(matchId){
     strKillLog = "";
     strKillLog2 = "";
     await HLTV.connectToScorebot({id:matchId,
-        onDisconnect(){
+        onDisconnect:(data,done)=>{
             strKillLog = "";
             strKillLog2 = "";
             return console.log("Bot desconectado do Scorebot");
@@ -312,7 +331,7 @@ async function connectHLTVBot(matchId){
                                         tweetId = data.id_str;
                                         console.log("Primeiro tweet enviado");
                                         
-                                        postKillLogs(tweetId);
+                                        //postKillLogs(tweetId);
                                         console.log(`🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`);
                                         
                                     }

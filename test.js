@@ -2,7 +2,7 @@ var twit = require('twit');
 const fs = require('fs');
 var config = require('./config.js');
 const {HLTV} = require('hltv');
-const { createCanvas } = require('canvas');
+const {createCanvas, loadImage } = require('canvas');
 const { get } = require('http');
 
 
@@ -19,297 +19,318 @@ var strMaps = "";
 var isLive="";
 
 matchId = link.split('/')[4];
-console.log(matchId);
 
-var strlong = "Othavio Henrico";
-console.log(strlong.slice(0,7));
+const canvas =  createCanvas(1920,1080);
+const ctx = canvas.getContext('2d');
+ctx.font = '30px Impact';
+ctx.fillText('Awesome',960,540);
+ctx.fillStyle = 'blue';
+ctx.fillRect(0,0,canvas.width,canvas.height);
 
-var killLog = "!🟠MSL killed 🔵robiin with ak47 !🟠Lekr0 killed 🔵flameZ with inferno !🟠Lekr0 killed 🔵MiGHTYMAX with ak47 !💣 has been planted !🟠aizy killed 🔵Surreal with ak47 !🟠1aizy killed 🔵Surreal with ak47 !🟠2aizy killed 🔵Surreal with ak47 !🟠3aizy killed 🔵Surreal with ak47 !🟠4aizy killed 🔵Surreal with ak47";
-var killLog2;
-console.log(killLog.slice(201).substr(0,1));
+var text = ctx.measureText('Awesome!')
+ctx.strokeStyle = 'rgba(0,0,0,0.5)'
+ctx.beginPath()
+ctx.lineTo(50, 102)
+ctx.lineTo(50 + text.width, 102)
+ctx.stroke();
+var canvasBuffer;
 
-var i=200;
 
-while(killLog.slice(i).substr(0,1)!="!"){
-    i--;
-}
-killLog2 = killLog.slice(i);
-killLog = killLog.slice(0,i);
+canvasBuffer = canvas.toBuffer();
+fs.writeFileSync("test.jpeg",canvasBuffer);
 
-var timestamp = 1604082600000;
-var date = new Date(timestamp);
-console.log(`${date.getUTCHours()}:${date.getUTCMinutes()} ${date.getUTCDate().toString()}`);
-console.log(killLog2);
-console.log(`\na\n${killLog}`);
 
-var RoundEnd = {
-    counterTerroristScore: 12,
-    terroristScore: 10,       
-    winner: 'TERRORIST',
-    winType: 'CTs_Win'        
-  }
+// console.log(matchId);
 
-var getMatch = {
-    TERRORIST: [
-      {
-        steamId: '1:0:27276435',
-        dbId: 13980,
-        name: 'lollipop21k',    
-        score: 21,
-        deaths: 15,
-        assists: 1,
-        alive: false,
-        money: 300,
-        damagePrRound: 106.52380952380952,
-        hp: 0,
-        kevlar: false,
-        helmet: false,
-        nick: 'lollipop21k',
-        hasDefusekit: false,
-        advancedStats: [Object]
-      },
-      {
-        steamId: '1:1:63696630',
-        dbId: 13976,
-        name: 'boX',
-        score: 10,
-        deaths: 16,
-        assists: 4,
-        alive: false,
-        money: 150,
-        damagePrRound: 77.42857142857143,
-        hp: 0,
-        kevlar: false,
-        helmet: false,
-        nick: 'boX',
-        hasDefusekit: false,
-        advancedStats: [Object]
-      },
-      {
-        steamId: '1:1:39964460',
-        dbId: 13155,
-        name: 'speed4k',
-        score: 9,
-        deaths: 14,
-        assists: 1,
-        alive: true,
-        money: 150,
-        damagePrRound: 46.523809523809526,
-        hp: 26,
-        primaryWeapon: 'awp',
-        kevlar: false,
-        helmet: false,
-        nick: 'speed4k',
-        hasDefusekit: false,
-        advancedStats: [Object]
-      },
-      {
-        steamId: '1:1:21627899',
-        dbId: 12269,
-        name: 'Jyo',
-        score: 8,
-        deaths: 15,
-        assists: 2,
-        alive: false,
-        money: 850,
-        damagePrRound: 55.80952380952381,
-        hp: 0,
-        kevlar: false,
-        helmet: false,
-        nick: 'Jyo',
-        hasDefusekit: false,
-        advancedStats: [Object]
-      },
-      {
-        steamId: '1:1:57022557',
-        dbId: 11926,
-        name: 'mds',
-        score: 8,
-        deaths: 15,
-        assists: 1,
-        alive: false,
-        money: 100,
-        damagePrRound: 49.523809523809526,
-        hp: 0,
-        kevlar: false,
-        helmet: false,
-        nick: 'mds',
-        hasDefusekit: false,
-        advancedStats: [Object]
-      }
-    ],
-    CT: [
-      {
-        steamId: '1:0:46888525',
-        dbId: 11940,
-        name: 'neaLaN',
-        score: 18,
-        deaths: 14,
-        assists: 1,
-        alive: false,
-        money: 1350,
-        damagePrRound: 89,
-        hp: 0,
-        kevlar: false,
-        helmet: false,
-        nick: 'neaLaN',
-        hasDefusekit: false,
-        advancedStats: [Object]
-      },
-      {
-        steamId: '1:0:131088388',
-        dbId: 16612,
-        name: 'n0rb3r7',
-        score: 17,
-        deaths: 12,
-        assists: 2,
-        alive: false,
-        money: 1400,
-        damagePrRound: 91.71428571428571,
-        hp: 0,
-        kevlar: false,
-        helmet: false,
-        nick: 'n0rb3r7',
-        hasDefusekit: false,
-        advancedStats: [Object]
-      },
-      {
-        steamId: '1:0:69039258',
-        dbId: 15117,
-        name: 'Keoz',
-        score: 15,
-        deaths: 9,
-        assists: 6,
-        alive: true,
-        money: 3950,
-        damagePrRound: 86.52380952380952,
-        hp: 37,
-        primaryWeapon: 'ak47',
-        kevlar: true,
-        helmet: true,
-        nick: 'Keoz',
-        hasDefusekit: true,
-        advancedStats: [Object]
-      },
-      {
-        steamId: '1:1:26339383',
-        dbId: 964,
-        name: 'mou',
-        score: 15,
-        deaths: 9,
-        assists: 2,
-        alive: true,
-        money: 3150,
-        damagePrRound: 69.66666666666667,
-        hp: 100,
-        primaryWeapon: 'awp',
-        kevlar: true,
-        helmet: true,
-        nick: 'mou',
-        hasDefusekit: true,
-        advancedStats: [Object]
-      },
-      {
-        steamId: '1:1:171557725',
-        dbId: 18752,
-        name: 'kade0',
-        score: 10,
-        deaths: 12,
-        assists: 1,
-        alive: true,
-        money: 1400,
-        damagePrRound: 44.04761904761905,
-        hp: 100,
-        primaryWeapon: 'ak47',
-        kevlar: true,
-        helmet: true,
-        nick: 'kade0',
-        hasDefusekit: false,
-        advancedStats: [Object]
-      }
-    ],
-    ctMatchHistory: {
-      firstHalf: [
-        [Object], [Object],
-        [Object], [Object],
-        [Object], [Object],
-        [Object], [Object],
-        [Object], [Object],
-        [Object], [Object],
-        [Object], [Object],
-        [Object]
-      ],
-      secondHalf: [ [Object], [Object], [Object], [Object], [Object] ]
-    },
-    terroristMatchHistory: {
-      firstHalf: [
-        [Object], [Object],
-        [Object], [Object],
-        [Object], [Object],
-        [Object], [Object],
-        [Object], [Object],
-        [Object], [Object],
-        [Object], [Object],
-        [Object]
-      ],
-      secondHalf: [ [Object], [Object], [Object], [Object], [Object] ]
-    },
-    bombPlanted: false,
-    mapName: 'de_dust2',
-    terroristTeamName: 'Nemiga',
-    ctTeamName: 'K23',
-    currentRound: 21,
-    counterTerroristScore: 14,
-    terroristScore: 6,
-    ctTeamId: 7244,
-    tTeamId: 7969,
-    frozen: false,
-    live: true,
-    ctTeamScore: 15,
-    tTeamScore: 15,
-    startingCt: 7969,
-    startingT: 7244
-  }
-// HLTV.connectToScorebot({id:2345099,onScoreboardUpdate:(data,done)=>{
-//     console.log(data.live);
-//     done();
-// }});
+// var strlong = "Othavio Henrico";
+// console.log(strlong.slice(0,7));
 
-var ctScore = getMatch.ctTeamScore;
-var tScore = getMatch.tTeamScore;
-var otTScore = 15;
-var otCtScore = 15;
-var isFinished = false;
-var limiteAnterior = 30;
-var scoreLimit1 = 19;
-var scoreLimit2 = 19;
-var ctTeamName = getMatch.ctTeamName;
-var tTeamName = getMatch.terroristTeamName;
+// var killLog = "!🟠MSL killed 🔵robiin with ak47 !🟠Lekr0 killed 🔵flameZ with inferno !🟠Lekr0 killed 🔵MiGHTYMAX with ak47 !💣 has been planted !🟠aizy killed 🔵Surreal with ak47 !🟠1aizy killed 🔵Surreal with ak47 !🟠2aizy killed 🔵Surreal with ak47 !🟠3aizy killed 🔵Surreal with ak47 !🟠4aizy killed 🔵Surreal with ak47";
+// var killLog2;
+// console.log(killLog.slice(201).substr(0,1));
 
-if(ctScore + tScore >= 30 && isFinished == false && getMatch.frozen == false){
-    if(RoundEnd.winner == "CT"){
-        otCtScore++;
-    }
-    else if(RoundEnd.winner == "TERRORIST"){
-        otTScore++;
-    }
+// var i=200;
+
+// while(killLog.slice(i).substr(0,1)!="!"){
+//     i--;
+// }
+// killLog2 = killLog.slice(i);
+// killLog = killLog.slice(0,i);
+
+// var timestamp = 1604082600000;
+// var date = new Date(timestamp);
+// console.log(`${date.getUTCHours()}:${date.getUTCMinutes()} ${date.getUTCDate().toString()}`);
+// console.log(killLog2);
+// console.log(`\na\n${killLog}`);
+
+// var RoundEnd = {
+//     counterTerroristScore: 12,
+//     terroristScore: 10,       
+//     winner: 'TERRORIST',
+//     winType: 'CTs_Win'        
+//   }
+
+// var getMatch = {
+//     TERRORIST: [
+//       {
+//         steamId: '1:0:27276435',
+//         dbId: 13980,
+//         name: 'lollipop21k',    
+//         score: 21,
+//         deaths: 15,
+//         assists: 1,
+//         alive: false,
+//         money: 300,
+//         damagePrRound: 106.52380952380952,
+//         hp: 0,
+//         kevlar: false,
+//         helmet: false,
+//         nick: 'lollipop21k',
+//         hasDefusekit: false,
+//         advancedStats: [Object]
+//       },
+//       {
+//         steamId: '1:1:63696630',
+//         dbId: 13976,
+//         name: 'boX',
+//         score: 10,
+//         deaths: 16,
+//         assists: 4,
+//         alive: false,
+//         money: 150,
+//         damagePrRound: 77.42857142857143,
+//         hp: 0,
+//         kevlar: false,
+//         helmet: false,
+//         nick: 'boX',
+//         hasDefusekit: false,
+//         advancedStats: [Object]
+//       },
+//       {
+//         steamId: '1:1:39964460',
+//         dbId: 13155,
+//         name: 'speed4k',
+//         score: 9,
+//         deaths: 14,
+//         assists: 1,
+//         alive: true,
+//         money: 150,
+//         damagePrRound: 46.523809523809526,
+//         hp: 26,
+//         primaryWeapon: 'awp',
+//         kevlar: false,
+//         helmet: false,
+//         nick: 'speed4k',
+//         hasDefusekit: false,
+//         advancedStats: [Object]
+//       },
+//       {
+//         steamId: '1:1:21627899',
+//         dbId: 12269,
+//         name: 'Jyo',
+//         score: 8,
+//         deaths: 15,
+//         assists: 2,
+//         alive: false,
+//         money: 850,
+//         damagePrRound: 55.80952380952381,
+//         hp: 0,
+//         kevlar: false,
+//         helmet: false,
+//         nick: 'Jyo',
+//         hasDefusekit: false,
+//         advancedStats: [Object]
+//       },
+//       {
+//         steamId: '1:1:57022557',
+//         dbId: 11926,
+//         name: 'mds',
+//         score: 8,
+//         deaths: 15,
+//         assists: 1,
+//         alive: false,
+//         money: 100,
+//         damagePrRound: 49.523809523809526,
+//         hp: 0,
+//         kevlar: false,
+//         helmet: false,
+//         nick: 'mds',
+//         hasDefusekit: false,
+//         advancedStats: [Object]
+//       }
+//     ],
+//     CT: [
+//       {
+//         steamId: '1:0:46888525',
+//         dbId: 11940,
+//         name: 'neaLaN',
+//         score: 18,
+//         deaths: 14,
+//         assists: 1,
+//         alive: false,
+//         money: 1350,
+//         damagePrRound: 89,
+//         hp: 0,
+//         kevlar: false,
+//         helmet: false,
+//         nick: 'neaLaN',
+//         hasDefusekit: false,
+//         advancedStats: [Object]
+//       },
+//       {
+//         steamId: '1:0:131088388',
+//         dbId: 16612,
+//         name: 'n0rb3r7',
+//         score: 17,
+//         deaths: 12,
+//         assists: 2,
+//         alive: false,
+//         money: 1400,
+//         damagePrRound: 91.71428571428571,
+//         hp: 0,
+//         kevlar: false,
+//         helmet: false,
+//         nick: 'n0rb3r7',
+//         hasDefusekit: false,
+//         advancedStats: [Object]
+//       },
+//       {
+//         steamId: '1:0:69039258',
+//         dbId: 15117,
+//         name: 'Keoz',
+//         score: 15,
+//         deaths: 9,
+//         assists: 6,
+//         alive: true,
+//         money: 3950,
+//         damagePrRound: 86.52380952380952,
+//         hp: 37,
+//         primaryWeapon: 'ak47',
+//         kevlar: true,
+//         helmet: true,
+//         nick: 'Keoz',
+//         hasDefusekit: true,
+//         advancedStats: [Object]
+//       },
+//       {
+//         steamId: '1:1:26339383',
+//         dbId: 964,
+//         name: 'mou',
+//         score: 15,
+//         deaths: 9,
+//         assists: 2,
+//         alive: true,
+//         money: 3150,
+//         damagePrRound: 69.66666666666667,
+//         hp: 100,
+//         primaryWeapon: 'awp',
+//         kevlar: true,
+//         helmet: true,
+//         nick: 'mou',
+//         hasDefusekit: true,
+//         advancedStats: [Object]
+//       },
+//       {
+//         steamId: '1:1:171557725',
+//         dbId: 18752,
+//         name: 'kade0',
+//         score: 10,
+//         deaths: 12,
+//         assists: 1,
+//         alive: true,
+//         money: 1400,
+//         damagePrRound: 44.04761904761905,
+//         hp: 100,
+//         primaryWeapon: 'ak47',
+//         kevlar: true,
+//         helmet: true,
+//         nick: 'kade0',
+//         hasDefusekit: false,
+//         advancedStats: [Object]
+//       }
+//     ],
+//     ctMatchHistory: {
+//       firstHalf: [
+//         [Object], [Object],
+//         [Object], [Object],
+//         [Object], [Object],
+//         [Object], [Object],
+//         [Object], [Object],
+//         [Object], [Object],
+//         [Object], [Object],
+//         [Object]
+//       ],
+//       secondHalf: [ [Object], [Object], [Object], [Object], [Object] ]
+//     },
+//     terroristMatchHistory: {
+//       firstHalf: [
+//         [Object], [Object],
+//         [Object], [Object],
+//         [Object], [Object],
+//         [Object], [Object],
+//         [Object], [Object],
+//         [Object], [Object],
+//         [Object], [Object],
+//         [Object]
+//       ],
+//       secondHalf: [ [Object], [Object], [Object], [Object], [Object] ]
+//     },
+//     bombPlanted: false,
+//     mapName: 'de_dust2',
+//     terroristTeamName: 'Nemiga',
+//     ctTeamName: 'K23',
+//     currentRound: 21,
+//     counterTerroristScore: 14,
+//     terroristScore: 6,
+//     ctTeamId: 7244,
+//     tTeamId: 7969,
+//     frozen: false,
+//     live: true,
+//     ctTeamScore: 15,
+//     tTeamScore: 15,
+//     startingCt: 7969,
+//     startingT: 7244
+//   }
+// // HLTV.connectToScorebot({id:2345099,onScoreboardUpdate:(data,done)=>{
+// //     console.log(data.live);
+// //     done();
+// // }});
+
+// var ctScore = getMatch.ctTeamScore;
+// var tScore = getMatch.tTeamScore;
+// var otTScore = 15;
+// var otCtScore = 15;
+// var isFinished = false;
+// var limiteAnterior = 30;
+// var scoreLimit1 = 19;
+// var scoreLimit2 = 19;
+// var ctTeamName = getMatch.ctTeamName;
+// var tTeamName = getMatch.terroristTeamName;
+
+// if(ctScore + tScore >= 30 && isFinished == false && getMatch.frozen == false){
+//     if(RoundEnd.winner == "CT"){
+//         otCtScore++;
+//     }
+//     else if(RoundEnd.winner == "TERRORIST"){
+//         otTScore++;
+//     }
     
-    if(otCtScore + otTScore >limiteAnterior && otCtScore + otTScore <=limiteAnterior+6){
-        if(otCtScore == scoreLimit1){
-            isFinished = true;
-            console.log(`\n\n✅${ctTeamName} won the map!`);
-        }
-        else if(otTScore == scoreLimit1){
-            isFinished = true;
-            console.log(`\n\n✅${tTeamName} won the map!`);
-        }
-    }
-    else{
-        limiteAnterior = limiteAnterior +6;
-        scoreLimit1 = scoreLimit1+3;
-    }
-    return console.log("CT: " +otCtScore+" vs " +" T: "+ otTScore);
-}
+//     if(otCtScore + otTScore >limiteAnterior && otCtScore + otTScore <=limiteAnterior+6){
+//         if(otCtScore == scoreLimit1){
+//             isFinished = true;
+//             console.log(`\n\n✅${ctTeamName} won the map!`);
+//         }
+//         else if(otTScore == scoreLimit1){
+//             isFinished = true;
+//             console.log(`\n\n✅${tTeamName} won the map!`);
+//         }
+//     }
+//     else{
+//         limiteAnterior = limiteAnterior +6;
+//         scoreLimit1 = scoreLimit1+3;
+//     }
+//     return console.log("CT: " +otCtScore+" vs " +" T: "+ otTScore);
+// }
 
 //APENAS GUARDANDO CÓDIGO
 
