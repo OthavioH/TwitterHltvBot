@@ -92,6 +92,7 @@ async function execBot(){
                         }
                     );
                     connectHLTVBot(matchId);
+                    
                 }
                 else {
                     strMaps = "";
@@ -219,6 +220,8 @@ async function connectHLTVBot(matchId){
     matchStatus = "";
     ctScore = 0;
     tScore = 0;
+    strKillLog = "";
+    strKillLog2 = "";
     await HLTV.connectToScorebot({id:matchId,
         onDisconnect(){
             strKillLog = "";
