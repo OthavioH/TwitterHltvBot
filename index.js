@@ -292,10 +292,10 @@ async function connectHLTVBot(matchId){
                             }
                         }
                         else {
-                            makeTweetWin();
+                            return null;
                         }
 
-                        function makeTweetWin(){
+                        function makeTweetWin(winnerTeamName,ctScore,tScore){
                             Twitter.post(
                                 'statuses/update',
                                 {
@@ -304,7 +304,7 @@ async function connectHLTVBot(matchId){
                                     `Map: ${mapName}\n\n`+
                                     `📝Round Winner: ${data.log[0].RoundEnd.winner}\n`+
                                     `📝Win type: ${verifyWinType(data.log[0].RoundEnd.winType)}`+
-                                    `${verifyWin(ctTeamName,ctScore,tTeamName,tScore)}`
+                                    `\n\n✅${winnerTeamName} won the map!`
                                 },
                                 function (err,data,response){
                                     if(err != undefined){
@@ -335,12 +335,10 @@ async function connectHLTVBot(matchId){
                                     else{
                                         tweetId = data.id_str;
                                         console.log("Primeiro tweet enviado");
-                                        if(verifyWin(ctTeamName,ctScore,tTeamName,tScore) != ""){
-                                            isFinished = true;
-                                        }else{
-                                            postKillLogs(tweetId);
-                                            console.log(`🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`);
-                                        }
+                                        
+                                        postKillLogs(tweetId);
+                                        console.log(`🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`);
+                                        
                                     }
                                 }
                             );
@@ -348,27 +346,26 @@ async function connectHLTVBot(matchId){
                             function verifyWin(ctTeamName,ctScore,tTeamName,tScore){
                                 if(ctScore == 16 && ctScore+tScore <=30){
                                     console.log("Não chegou no OT e o CT ganhou");
-                                    return `\n\n✅${ctTeamName} won the map!`;
+                                    makeTweetWin(ctTeamName,ctScore,tScore);
                                 }
                                 else if(tScore == 16 && ctScore+tScore <=30){
                                     console.log("Não chegou no OT e o TR ganhou");
-                                    return `\n\n✅${tTeamName} won the map!`;
+                                    makeTweetWin(tTeamName,ctScore,tScore);
                                 }
                                 else if(ctScore + tScore>30){
                                     if(ctScore + tScore >limiteAnterior && ctScore + tScore <=limiteAnterior+6){
                                         if(ctScore == scoreLimit1){
                                             console.log("Chegou aqui no OT e o CT ganhou");
-                                            return `\n\n✅${ctTeamName} won the map!`;
+                                            makeTweetWin(ctTeamName,ctScore,tScore);
                                         }
                                         else if(tScore == scoreLimit1){
                                             console.log("Chegou aqui no OT e o TR ganhou");
-                                            return `\n\n✅${tTeamName} won the map!`;
+                                            makeTweetWin(tTeamName,ctScore,tScore);
                                         }
                                     }
                                     else{
                                         limiteAnterior = limiteAnterior +6;
                                         scoreLimit1 = scoreLimit1+3;
-                                        return "";
                                     }
                                 }
                                 else {
