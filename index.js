@@ -229,8 +229,6 @@ async function connectHLTVBot(matchId){
 
             ctTeamName = data.ctTeamName;
             tTeamName = data.terroristTeamName;
-            ctScore = data.ctTeamScore;
-            tScore = data.tTeamScore;
             mapName = data.mapName;
             isLive = data.live;
             frozen = data.frozen;
@@ -281,6 +279,9 @@ async function connectHLTVBot(matchId){
                     }
         
                     if(data.log[0].RoundEnd != undefined){
+
+                        ctScore = data.ctTeamScore;
+                        tScore = data.tTeamScore;
 
                         if(ctScore == 0 && tScore == 0){
                             return null;
