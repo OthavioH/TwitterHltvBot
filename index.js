@@ -350,6 +350,7 @@ async function connectHLTVBot(matchId){
                                         else{
                                             limiteAnterior = limiteAnterior +6;
                                             scoreLimit1 = scoreLimit1+3;
+                                            return "";
                                         }
                                     }
                                     else {
