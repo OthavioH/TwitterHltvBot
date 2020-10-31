@@ -281,18 +281,13 @@ async function connectHLTVBot(matchId){
                     }
         
                     if(data.log[0].RoundEnd != undefined){
-        
-                        if(isFinished == false){
-                            if(ctScore == 0 && tScore == 0){
-                                return null;
-                            }
-                            //REGULAR TIME
-                            else if(data.log[0].RoundEnd.winner != 'DRAW' && frozen == false){
-                                makeTweet();
-                            }
-                        }
-                        else {
+
+                        if(ctScore == 0 && tScore == 0){
                             return null;
+                        }
+                        //REGULAR TIME
+                        else {
+                            makeTweet();
                         }
 
                         function makeTweetWin(winnerTeamName,ctScore,tScore){
@@ -313,9 +308,6 @@ async function connectHLTVBot(matchId){
                                     else{
                                         tweetId = data.id_str;
                                         console.log("Tweet de win enviado");
-                                        setTimeout(()=>{
-                                            done();
-                                        },6000);
                                     }
                                 }
                             );
@@ -374,6 +366,7 @@ async function connectHLTVBot(matchId){
                                 else {
                                     return "";
                                 }
+                                return "";
                             }
                             
                             function postKillLogs(tweetId){
