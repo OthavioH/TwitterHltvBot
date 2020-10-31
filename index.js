@@ -314,9 +314,6 @@ async function connectHLTVBot(matchId){
                                         console.log("Primeiro tweet enviado");
                                         if(verifyWin(ctTeamName,ctScore,tTeamName,tScore) != ""){
                                             isFinished = true;
-                                            setTimeout(()=>{
-                                                done();
-                                            },2000);
                                         }else{
                                             postKillLogs(tweetId);
                                             console.log(`🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`);
