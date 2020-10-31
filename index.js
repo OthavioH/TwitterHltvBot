@@ -292,7 +292,30 @@ async function connectHLTVBot(matchId){
                             }
                         }
                         else {
-                            return null;
+                            makeTweetWin();
+                        }
+
+                        function makeTweetWin(){
+                            Twitter.post(
+                                'statuses/update',
+                                {
+                                    status:`The match has ended\n`+
+                                    `🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`+
+                                    `Map: ${mapName}\n\n`+
+                                    `📝Round Winner: ${data.log[0].RoundEnd.winner}\n`+
+                                    `📝Win type: ${verifyWinType(data.log[0].RoundEnd.winType)}`+
+                                    `${verifyWin(ctTeamName,ctScore,tTeamName,tScore)}`
+                                },
+                                function (err,data,response){
+                                    if(err != undefined){
+                                        console.log(err);
+                                    }
+                                    else{
+                                        tweetId = data.id_str;
+                                        console.log("Tweet de win enviado");
+                                    }
+                                }
+                            );
                         }
         
                         function makeTweet(){
