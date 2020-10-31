@@ -221,7 +221,7 @@ async function connectHLTVBot(matchId){
     tScore = 0;
     await HLTV.connectToScorebot({id:matchId,
         onDisconnect(){
-            return console.log("Partida acabou");
+            return console.log("Bot desconectado do Scorebot");
         },
         onScoreboardUpdate: (data,done)=>{
 
@@ -326,20 +326,24 @@ async function connectHLTVBot(matchId){
                                 function verifyWin(ctTeamName,ctScore,tTeamName,tScore){
                                     if(ctScore == 16 && ctScore+tScore <=30){
                                         isFinished = true;
+                                        console.log("Não chegou no OT e o CT ganhou");
                                         return `\n\n✅${ctTeamName} won the map!`;
                                     }
                                     else if(tScore == 16 && ctScore+tScore <=30){
                                         isFinished = true;
+                                        console.log("Não chegou no OT e o TR ganhou");
                                         return `\n\n✅${tTeamName} won the map!`;
                                     }
                                     else if(ctScore + tScore>30){
                                         if(ctScore + tScore >limiteAnterior && ctScore + tScore <=limiteAnterior+6){
                                             if(ctScore == scoreLimit1){
                                                 isFinished = true;
+                                                console.log("Chegou aqui no OT e o CT ganhou");
                                                 return `\n\n✅${ctTeamName} won the map!`;
                                             }
                                             else if(tScore == scoreLimit1){
                                                 isFinished = true;
+                                                console.log("Chegou aqui no OT e o TR ganhou");
                                                 return `\n\n✅${tTeamName} won the map!`;
                                             }
                                         }
