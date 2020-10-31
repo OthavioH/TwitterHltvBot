@@ -311,10 +311,11 @@ async function connectHLTVBot(matchId){
                                         else{
                                             tweetId = data.id_str;
                                             console.log("Primeiro tweet enviado");
-                                            if(isFinished ==true){
+                                            if(verifyWin(ctTeamName,ctScore,tTeamName,tScore) != ""){
+                                                isFinished = true;
                                                 setTimeout(()=>{
                                                     done();
-                                                },10000);
+                                                },2000);
                                             }else{
                                                 postKillLogs(tweetId);
                                                 console.log(`🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`);
@@ -337,12 +338,10 @@ async function connectHLTVBot(matchId){
                                     else if(ctScore + tScore>30){
                                         if(ctScore + tScore >limiteAnterior && ctScore + tScore <=limiteAnterior+6){
                                             if(ctScore == scoreLimit1){
-                                                isFinished = true;
                                                 console.log("Chegou aqui no OT e o CT ganhou");
                                                 return `\n\n✅${ctTeamName} won the map!`;
                                             }
                                             else if(tScore == scoreLimit1){
-                                                isFinished = true;
                                                 console.log("Chegou aqui no OT e o TR ganhou");
                                                 return `\n\n✅${tTeamName} won the map!`;
                                             }
