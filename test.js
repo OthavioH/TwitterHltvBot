@@ -39,6 +39,18 @@ var canvasBuffer;
 canvasBuffer = canvas.toBuffer();
 fs.writeFileSync("test.jpeg",canvasBuffer);
 
+strKillLog = "!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with AK47\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n"
+
+var i=200;
+        
+while(strKillLog.slice(i).substr(0,1)!="!"){
+  i--;
+}
+
+strKillLog2 = strKillLog.slice(i);
+strKillLog = strKillLog.slice(0,i);
+console.log(strKillLog);
+
 
 // console.log(matchId);
 
