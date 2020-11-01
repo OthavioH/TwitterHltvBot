@@ -1,7 +1,7 @@
 var twit = require('twit');
 var config = require('./config.js');
 const {HLTV} = require('hltv');
-const { createCanvas } = require('canvas');
+const {createCanvas, loadImage,Canvas } = require('canvas');
 const fs = require('fs');
 
 
@@ -38,10 +38,8 @@ var secondTweetID = "";
 var winnerTeam = "";
 var highlightedPlayer = "";
 var matchStatus = "";
-
 var teamId = 8297;
 var teamLogo = "";
-
 const width = 1920;
 const height = 1080;
 var canvas;
@@ -62,11 +60,15 @@ var year;
 var minutes;
 var hours;
 var date;
-
 var otCtScore = 15
 var otTScore = 15
 var frozen;
 var numberIndice=0;
+var previousKillLog = "";
+var previousSuicideLog = "";
+var previousBombLog = "";
+var previousDefusedLog = "";
+var previousRoundEndLog = "";
 
 execBot();
 
@@ -256,51 +258,71 @@ async function connectHLTVBot(matchId){
             frozen = data.frozen;
 
         }, onLogUpdate:(data,done)=>{
-            if(data.log[0].MatchStarted != undefined){
-                strKillLog ="";
-                strKillLog2 = "";
-            }
-
             if(data.log[0].RoundStart != undefined){
-                strKillLog ="";
-                strKillLog2 = "";
+                fodase ="";
+                previousKillLog = "";
+                previousSuicideLog = "";
+                previousBombLog = "";
+                previousDefusedLog = "";
+                previousRoundEndLog = "";
             }
-
-            if(data.log[0].Kill != undefined){
-                killerSide = data.log[0].Kill.killerSide;
-                killerNick = data.log[0].Kill.killerNick;
-                victimSide = data.log[0].Kill.victimSide;
-                victimNick = data.log[0].Kill.victimNick;
-                weapon = data.log[0].Kill.weapon;
-                headshot = data.log[0].Kill.headShot;
-
-                if(killerSide == 'TERRORIST'){
-                    killerSide = '🟠';
-                }else{
-                    killerSide = '🔵';
-                }
-                if(victimSide == 'TERRORIST'){
-                    victimSide = '🟠';
-                }
-                else{
-                    victimSide = '🔵';
-                }
-                strKillLog += `!${killerSide}${killerNick} killed ${victimSide}${victimNick} with ${weapon}\n`;
+        
+            if(data.log[0].Kill != undefined && data.log[0].Kill != previousKillLog){
+              killerSide = data.log[0].Kill.killerSide;
+              killerNick = data.log[0].Kill.killerNick;
+              victimSide = data.log[0].Kill.victimSide;
+              victimNick = data.log[0].Kill.victimNick;
+              weapon = data.log[0].Kill.weapon;
+              headshot = data.log[0].Kill.headShot;
+        
+              if(killerSide == 'TERRORIST'){
+                  killerSide = 'TR';
+              }else{
+                  killerSide = 'CT';
+              }
+              if(victimSide == 'TERRORIST'){
+                  victimSide = 'TR';
+              }
+              else{
+                  victimSide = 'CT';
+              }
+              fodase = fodase + `(${killerSide}) ${killerNick} killed (${victimSide}) ${victimNick} with ${weapon}\n\n`;
+              previousKillLog = data.log[0].Kill;
+            }
+            if(data.log[0].Suicide != undefined && data.log[0].Suicide != previousSuicideLog){
+                fodase = fodase + `${data.log[0].Suicide.playerNick} committed suicide\n\n`;
+                previousSuicideLog = data.log[0].Suicide;
+            }
+            if(data.log[0].BombPlanted !=undefined && data.log[0].BombPlanted != previousBombLog){
+                fodase = fodase + `Bomb has been planted by ${data.log[0].BombPlanted.playerNick}\n\n`;
+                previousBombLog = data.log[0].BombPlanted;
+        
+            }
+            if(data.log[0].BombDefused != undefined && data.log[0].BombDefused != previousDefusedLog){
+                fodase = fodase + `Bomb has been defused by ${data.log[0].BombDefused.playerNick}\n\n`;
+                previousDefusedLog = data.log[0].BombDefused;
+            }
+        
+            if(data.log[0].RoundEnd != undefined && data.log[0].RoundEnd != previousRoundEndLog ){
+                const canvas =  createCanvas(1920,1080);
+                canvas instanceof Canvas;
+                const ctx = canvas.getContext('2d');
+                ctx.beginPath();
+                ctx.font = '40px Impact';
+                ctx.fillRect(200,-400,canvas.width,canvas.height);
+                ctx.fillStyle = 'white';
+                ctx.fillText(`${fodase}`,75,80);
+                var canvasBuffer;
+                ctx.fill();
+                ctx.closePath();
+                ctx.fillStyle = 'steelblue'
+                canvas.quality = 'best';
                 
-            }
-            if(data.log[0].Suicide != undefined){
-                strKillLog += `!${data.log[0].Suicide.playerNick} committed suicide\n`;
-            }
-            if(data.log[0].BombPlanted !=undefined){
-                strKillLog += `!💣 has been planted by ${data.log[0].BombPlanted.playerNick}\n`;
-
-            }
-            if(data.log[0].BombDefused != undefined){
-                strKillLog += `!✂️ has been defused by ${data.log[0].BombDefused.playerNick}\n`;
-            }
-
-            if(data.log[0].RoundEnd != undefined){
-
+                canvasBuffer = canvas.toBuffer('image/jpeg',{compressionLevel:3});
+                fs.writeFileSync("killLog.jpeg",canvasBuffer);
+                
+                previousRoundEndLog = data.log[0].RoundEnd;
+                console.log("Imagem criada");
                 ctScore = data.log[0].RoundEnd.counterTerroristScore;
                 tScore = data.log[0].RoundEnd.terroristScore;
 
@@ -313,29 +335,39 @@ async function connectHLTVBot(matchId){
                 }
 
                 function makeTweet(){
-                    Twitter.post(
-                        'statuses/update',
-                        {
-                            status:`🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`+
-                            `Map: ${mapName}\n\n`+
-                            `📝Round Winner: ${data.log[0].RoundEnd.winner}\n`+
-                            `📝Win type: ${verifyWinType(data.log[0].RoundEnd.winType)}`+
-                            `${verifyWin(ctTeamName,ctScore,tTeamName,tScore)}`
-                        },
-                        function (err,data,response){
-                            if(err != undefined){
-                                console.log(err);
-                            }
-                            else{
-                                tweetId = data.id_str;
-                                console.log("Primeiro tweet enviado");
-                                
-                                //postKillLogs(tweetId);
-                                console.log(`🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`);
-                                
-                            }
+                    var win = verifyWin(ctTeamName,ctScore,tTeamName,tScore)
+                    if(win != ""){
+                        if(win.toLowerCase().includes(ctTeamName)){
+                            makeTweetWin(ctTeamName,ctScore,tScore);
+                        }else if(win.toLowerCase().includes(tTeamName)){
+                            makeTweetWin(ctTeamName,ctScore,tScore);
                         }
-                    );
+                    }
+                    else{
+                        Twitter.post(
+                            'statuses/update',
+                            {
+                                status:`🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`+
+                                `Map: ${mapName}\n\n`+
+                                `📝Round Winner: ${data.log[0].RoundEnd.winner}\n`+
+                                `📝Win type: ${verifyWinType(data.log[0].RoundEnd.winType)}`
+                            },
+                            function (err,data,response){
+                                if(err != undefined){
+                                    console.log(err);
+                                }
+                                else{
+                                    tweetId = data.id_str;
+                                    console.log("Primeiro tweet enviado");
+                                    
+                                    postKillLogs(tweetId);
+                                    console.log(`🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`);
+                                    
+                                }
+                            }
+                        );
+                    }
+                    
 
                     function makeTweetWin(winnerTeamName,ctScore,tScore){
                         Twitter.post(
@@ -361,21 +393,21 @@ async function connectHLTVBot(matchId){
                     function verifyWin(ctTeamName,ctScore,tTeamName,tScore){
                         if(ctScore == 16 && ctScore+tScore <=30){
                             console.log("Não chegou no OT e o CT ganhou");
-                            makeTweetWin(ctTeamName,ctScore,tScore);
+                            return `✅${ctTeamName} won the map!`
                         }
                         else if(tScore == 16 && ctScore+tScore <=30){
                             console.log("Não chegou no OT e o TR ganhou");
-                            makeTweetWin(tTeamName,ctScore,tScore);
+                            return `✅${tTeamName} won the map!`
                         }
                         else if(ctScore + tScore>30){
                             if(ctScore + tScore >limiteAnterior && ctScore + tScore <=limiteAnterior+6){
                                 if(ctScore == scoreLimit1){
                                     console.log("Chegou aqui no OT e o CT ganhou");
-                                    makeTweetWin(ctTeamName,ctScore,tScore);
+                                    return `✅${ctTeamName} won the map!`
                                 }
                                 else if(tScore == scoreLimit1){
                                     console.log("Chegou aqui no OT e o TR ganhou");
-                                    makeTweetWin(tTeamName,ctScore,tScore);
+                                    return `✅${tTeamName} won the map!`
                                 }
                             }
                             else{
@@ -390,79 +422,33 @@ async function connectHLTVBot(matchId){
                     }
                     
                     function postKillLogs(tweetId){
-                
-                        if(strKillLog.length > 200){
-                            var i=200;
 
-                            while(strKillLog.slice(i).substr(0,1)!="!"){
-                                i--;
+                        Twitter.post(
+                            'media/upload',
+                            {	
+                                media:fs.readFileSync('killLog.jpeg',{encoding:'base64'}),
+                            },
+                            function (err,data,response){
+                                if(err != undefined){
+                                    console.log(err);
+                                }
+                                else{
+                                    Twitter.post(
+                                        'statuses/update', 
+                                        {
+                                            status: '======= Kill Logs =======',
+                                            in_reply_to_status_id:tweetId,
+                                            is_quote_status:true,
+                                            auto_populate_reply_metadata:true, 
+                                            media_ids: [data.media_id_string]
+                                        }, 
+                                        function(err, params, res) {
+                                        if (err) console.log(err);
+                                    });
+                                    console.log("Kill log enviado");	
+                                }
                             }
-                            strKillLog2 = strKillLog.slice(i);
-                            strKillLog = strKillLog.slice(0,i);
-                            console.log(strKillLog);
-
-                            Twitter.post(
-                                'statuses/update',
-                                {
-                                    in_reply_to_status_id:tweetId,
-                                    is_quote_status:true,
-                                    auto_populate_reply_metadata:true,
-                                    status:`${strKillLog}`
-                                },
-                                function (err,data,response){
-                                    if(err != undefined){
-                                        console.log(err);
-                                        
-                                    }
-                                    else{
-                                        secondTweetID = data.id_str;
-                                        console.log("Primeira kill log enviada");
-                                        Twitter.post(
-                                            'statuses/update',
-                                            {
-                                                in_reply_to_status_id:secondTweetID,
-                                                is_quote_status:true,
-                                                auto_populate_reply_metadata:true,
-                                                status:`${strKillLog2}`
-                                            },
-                                            function (error,data,response){
-                                                if(error != undefined){
-                                                    console.log(error);
-                                                    
-                                                }
-                                                else{
-                                                    console.log("Segunda kill log enviada");
-                                                
-                                                    strKillLog="";
-                                                    strKillLog2 ="";
-                                                }
-                                            }
-                                        );
-                                    }
-                                    
-                                }
-                            );
-                        }
-                        else{
-                            Twitter.post(
-                                'statuses/update',
-                                {
-                                    in_reply_to_status_id:tweetId,
-                                    is_quote_status:true,
-                                    auto_populate_reply_metadata:true,
-                                    status:`\n${strKillLog}`
-                                },
-                                function (err,data,response){
-                                    if(err != undefined){
-                                        console.log(err);
-                                    }
-                                    else{
-                                        strKillLog = "";
-                                        console.log(`🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`);
-                                    }
-                                }
-                            );
-                        }
+                        );
                     }
                 }
             }  

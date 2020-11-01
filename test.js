@@ -4,6 +4,7 @@ var config = require('./config.js');
 const {HLTV} = require('hltv');
 const {createCanvas, loadImage,Canvas } = require('canvas');
 const { get } = require('http');
+const { kill } = require('process');
 
 
 var Twitter =  new twit(config);
@@ -24,18 +25,28 @@ var victimNick;
 var weapon;
 var headshot;
 var fodase = "";
+var previousKillLog = "";
+var previousSuicideLog = "";
+var previousBombLog = "";
+var previousDefusedLog = "";
+var previousRoundEndLog = "";
 
 matchId = link.split('/')[4];
 
 
-HLTV.connectToScorebot({id:2345153,
+HLTV.connectToScorebot({id:2344905,
   onLogUpdate:(data,done)=>{
 
 	if(data.log[0].RoundStart != undefined){
 		fodase ="";
+		previousKillLog = "";
+		previousSuicideLog = "";
+		previousBombLog = "";
+		previousDefusedLog = "";
+		previousRoundEndLog = "";
 	}
 
-    if(data.log[0].Kill != undefined){
+    if(data.log[0].Kill != undefined && data.log[0].Kill != previousKillLog){
       killerSide = data.log[0].Kill.killerSide;
       killerNick = data.log[0].Kill.killerNick;
       victimSide = data.log[0].Kill.victimSide;
@@ -54,39 +65,61 @@ HLTV.connectToScorebot({id:2345153,
       else{
           victimSide = 'CT';
       }
-      fodase += `(${killerSide}) ${killerNick} killed (${victimSide}) ${victimNick} with ${weapon}\n`;
-      
+	  fodase = fodase + `(${killerSide}) ${killerNick} killed (${victimSide}) ${victimNick} with ${weapon}\n\n`;
+	  previousKillLog = data.log[0].Kill;
     }
-    if(data.log[0].Suicide != undefined){
-        fodase += `${data.log[0].Suicide.playerNick} committed suicide\n`;
+    if(data.log[0].Suicide != undefined && data.log[0].Suicide != previousSuicideLog){
+		fodase = fodase + `${data.log[0].Suicide.playerNick} committed suicide\n\n`;
+		previousSuicideLog = data.log[0].Suicide;
     }
-    if(data.log[0].BombPlanted !=undefined){
-        fodase += `Bomb has been planted by ${data.log[0].BombPlanted.playerNick}\n`;
+    if(data.log[0].BombPlanted !=undefined && data.log[0].BombPlanted != previousBombLog){
+		fodase = fodase + `Bomb has been planted by ${data.log[0].BombPlanted.playerNick}\n\n`;
+		previousBombLog = data.log[0].BombPlanted;
 
     }
-    if(data.log[0].BombDefused != undefined){
-      	fodase += `Bomb has been defused by ${data.log[0].BombDefused.playerNick}\n`;
+    if(data.log[0].BombDefused != undefined && data.log[0].BombDefused != previousDefusedLog){
+		fodase = fodase + `Bomb has been defused by ${data.log[0].BombDefused.playerNick}\n\n`;
+		previousDefusedLog = data.log[0].BombDefused;
     }
 
-    if(data.log[0].RoundEnd != undefined){
-		const canvas =  createCanvas(1280,720);
+    if(data.log[0].RoundEnd != undefined && data.log[0].RoundEnd != previousRoundEndLog ){
+		const canvas =  createCanvas(1920,1080);
 		canvas instanceof Canvas;
 		const ctx = canvas.getContext('2d');
 		ctx.beginPath();
-		ctx.font = '30px Impact';
+		ctx.font = '40px Impact';
 		ctx.fillRect(200,-400,canvas.width,canvas.height);
 		ctx.fillStyle = 'white';
 		ctx.fillText(`${fodase}`,75,80);
 		var canvasBuffer;
 		ctx.fill();
-
 		ctx.closePath();
+		ctx.fillStyle = 'steelblue'
 		canvas.quality = 'best';
-
+		
 		canvasBuffer = canvas.toBuffer('image/jpeg',{compressionLevel:3});
-		fs.writeFileSync("test.jpeg",canvasBuffer);
-
+		fs.writeFileSync("killLog.jpeg",canvasBuffer);
+		
+		previousRoundEndLog = data.log[0].RoundEnd;
 		console.log("Imagem criada");
+
+		// Twitter.post(
+		// 	'media/upload',
+		// 	{	
+		// 		media:fs.readFileSync('killLog.jpeg',{encoding:'base64'}),
+		// 	},
+		// 	function (err,data,response){
+		// 		if(err != undefined){
+		// 			console.log(err);
+		// 		}
+		// 		else{
+		// 			Twitter.post('statuses/update', {status: 'Kill Log as image test', media_ids: [data.media_id_string]}, function(err, params, res) {
+		// 				if (err) console.log(err);
+		// 			});
+		// 			console.log("Kill log enviado");	
+		// 		}
+		// 	}
+		// );
     }
   }
 })
