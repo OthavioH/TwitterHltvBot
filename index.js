@@ -256,7 +256,11 @@ async function connectHLTVBot(matchId){
             frozen = data.frozen;
 
         }, onLogUpdate:(data,done)=>{
-            console.log(data.log.length);
+            if(data.log[0].MatchStarted != undefined){
+                strKillLog ="";
+                strKillLog2 = "";
+            }
+
             if(data.log[0].RoundStart != undefined){
                 strKillLog ="";
                 strKillLog2 = "";
@@ -326,7 +330,7 @@ async function connectHLTVBot(matchId){
                                 tweetId = data.id_str;
                                 console.log("Primeiro tweet enviado");
                                 
-                                postKillLogs(tweetId);
+                                //postKillLogs(tweetId);
                                 console.log(`🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`);
                                 
                             }
@@ -446,7 +450,7 @@ async function connectHLTVBot(matchId){
                                     in_reply_to_status_id:tweetId,
                                     is_quote_status:true,
                                     auto_populate_reply_metadata:true,
-                                    status:`☠️\n${strKillLog}`
+                                    status:`\n${strKillLog}`
                                 },
                                 function (err,data,response){
                                     if(err != undefined){

@@ -2,7 +2,7 @@ var twit = require('twit');
 const fs = require('fs');
 var config = require('./config.js');
 const {HLTV} = require('hltv');
-const {createCanvas, loadImage } = require('canvas');
+const {createCanvas, loadImage,Canvas } = require('canvas');
 const { get } = require('http');
 
 
@@ -17,39 +17,79 @@ var tweetId;
 var indice = 0;
 var strMaps = "";
 var isLive="";
+var killerSide;
+var killerNick;
+var victimSide;
+var victimNick;
+var weapon;
+var headshot;
+var fodase = "";
 
 matchId = link.split('/')[4];
 
-const canvas =  createCanvas(1920,1080);
-const ctx = canvas.getContext('2d');
-ctx.font = '30px Impact';
-ctx.fillText('Awesome',960,540);
-ctx.fillStyle = 'blue';
-ctx.fillRect(0,0,canvas.width,canvas.height);
 
-var text = ctx.measureText('Awesome!')
-ctx.strokeStyle = 'rgba(0,0,0,0.5)'
-ctx.beginPath()
-ctx.lineTo(50, 102)
-ctx.lineTo(50 + text.width, 102)
-ctx.stroke();
-var canvasBuffer;
+HLTV.connectToScorebot({id:2345153,
+  onLogUpdate:(data,done)=>{
 
+	if(data.log[0].RoundStart != undefined){
+		fodase ="";
+	}
 
-canvasBuffer = canvas.toBuffer();
-fs.writeFileSync("test.jpeg",canvasBuffer);
+    if(data.log[0].Kill != undefined){
+      killerSide = data.log[0].Kill.killerSide;
+      killerNick = data.log[0].Kill.killerNick;
+      victimSide = data.log[0].Kill.victimSide;
+      victimNick = data.log[0].Kill.victimNick;
+      weapon = data.log[0].Kill.weapon;
+      headshot = data.log[0].Kill.headShot;
 
-strKillLog = "!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with AK47\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n!TR FALLEN killed CT FERGOD with M4A4\n"
+      if(killerSide == 'TERRORIST'){
+          killerSide = 'TR';
+      }else{
+          killerSide = 'CT';
+      }
+      if(victimSide == 'TERRORIST'){
+          victimSide = 'TR';
+      }
+      else{
+          victimSide = 'CT';
+      }
+      fodase += `(${killerSide}) ${killerNick} killed (${victimSide}) ${victimNick} with ${weapon}\n`;
+      
+    }
+    if(data.log[0].Suicide != undefined){
+        fodase += `${data.log[0].Suicide.playerNick} committed suicide\n`;
+    }
+    if(data.log[0].BombPlanted !=undefined){
+        fodase += `Bomb has been planted by ${data.log[0].BombPlanted.playerNick}\n`;
 
-var i=200;
-        
-while(strKillLog.slice(i).substr(0,1)!="!"){
-  i--;
-}
+    }
+    if(data.log[0].BombDefused != undefined){
+      	fodase += `Bomb has been defused by ${data.log[0].BombDefused.playerNick}\n`;
+    }
 
-strKillLog2 = strKillLog.slice(i);
-strKillLog = strKillLog.slice(0,i);
-console.log(strKillLog);
+    if(data.log[0].RoundEnd != undefined){
+		const canvas =  createCanvas(1280,720);
+		canvas instanceof Canvas;
+		const ctx = canvas.getContext('2d');
+		ctx.beginPath();
+		ctx.font = '30px Impact';
+		ctx.fillRect(200,-400,canvas.width,canvas.height);
+		ctx.fillStyle = 'white';
+		ctx.fillText(`${fodase}`,75,80);
+		var canvasBuffer;
+		ctx.fill();
+
+		ctx.closePath();
+		canvas.quality = 'best';
+
+		canvasBuffer = canvas.toBuffer('image/jpeg',{compressionLevel:3});
+		fs.writeFileSync("test.jpeg",canvasBuffer);
+
+		console.log("Imagem criada");
+    }
+  }
+})
 
 
 // console.log(matchId);
