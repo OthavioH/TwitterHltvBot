@@ -193,7 +193,7 @@ async function execBot(){
                                     in_reply_to_status_id:tweetReplyId,
                                     is_quote_status:true,
                                     auto_populate_reply_metadata:true,
-                                    status:`Couldn't find a match for the team you're looking for.\nYou typed the wrong name or there's no upcoming match for this team.`
+                                    status:`Couldn't find a match for the team you're looking for.`
                                 },
                                 function (error,data,response){
                                     if(error != undefined){
@@ -214,7 +214,7 @@ async function execBot(){
                         in_reply_to_status_id:tweetReplyId,
                         is_quote_status:true,
                         auto_populate_reply_metadata:true,
-                        status:`Please when you use this #, type only the name of one team from www.hltv.org.`
+                        status:`Please when you use this #, type the name of a team from www.hltv.org.`
                     },
                     function (error,data,response){
                         if(error != undefined){
