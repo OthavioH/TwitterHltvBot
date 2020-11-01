@@ -403,7 +403,7 @@ async function connectHLTVBot(matchId){
                                     in_reply_to_status_id:tweetId,
                                     is_quote_status:true,
                                     auto_populate_reply_metadata:true,
-                                    status:`☠️\n${strKillLog}`
+                                    status:`${strKillLog}`
                                 },
                                 function (err,data,response){
                                     if(err != undefined){
