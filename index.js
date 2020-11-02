@@ -350,7 +350,7 @@ async function connectHLTVBot(matchId){
                     const ctx = canvas.getContext('2d');
                     var previousY=25;
                     console.log(arrayPlayerOneNick);
-                    await loadImage(`./src/${mapName}.jpg`,).then((image)=>{
+                    loadImage(`./src/${mapName}.jpg`,).then((image)=>{
                         ctx.drawImage(image, 0,0, 1920, 1080);
                         console.log("Chegou até aqui");
                         for(var i = 0;i<arrayKillLogs.length;i++){
