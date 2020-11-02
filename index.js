@@ -308,14 +308,14 @@ async function connectHLTVBot(matchId){
                         victimSide = 'CT';
                 }
                 previousKillLog = data.log[0].Kill;
-                arrayKillLogs.push(`                                       killed                                              with ${weapon}`);
+                arrayKillLogs.push(`                                 killed                                                    with ${weapon}`);
                 arrayPlayerOneNick.push(killerNick);
                 arrayPlayerOneSide.push(killerSide);
                 arrayPlayerTwoNick.push(victimNick);
                 arrayPlayerTwoSide.push(victimSide);
             }
             if(data.log[0].Suicide != undefined && data.log[0].Suicide != previousSuicideLog){
-                arrayKillLogs.push(`                                        committed suicide`);
+                arrayKillLogs.push(`                                  committed suicide`);
                 arrayPlayerOneNick.push(data.log[0].Suicide.playerNick);
                 arrayPlayerOneSide.push(data.log[0].Suicide.side);
                 arrayPlayerTwoSide.push(undefined);
@@ -323,7 +323,7 @@ async function connectHLTVBot(matchId){
                 previousSuicideLog = data.log[0].Suicide;
             }
             if(data.log[0].BombPlanted !=undefined && data.log[0].BombPlanted != previousBombLog){
-                arrayKillLogs.push(`                                        planted the bomb (${data.log[0].BombPlanted.tPlayers} Ts alive and ${data.log[0].BombPlanted.ctPlayers} CTs alive)`);
+                arrayKillLogs.push(`                                  planted the bomb (${data.log[0].BombPlanted.tPlayers} Ts alive and ${data.log[0].BombPlanted.ctPlayers} CTs alive)`);
                 arrayPlayerOneNick.push(data.log[0].BombPlanted.playerNick);
                 arrayPlayerOneSide.push("TERRORIST");
                 arrayPlayerTwoSide.push(undefined);
@@ -332,7 +332,7 @@ async function connectHLTVBot(matchId){
         
             }
             if(data.log[0].BombDefused != undefined && data.log[0].BombDefused != previousDefusedLog){
-                arrayKillLogs.push(`                                        defused the bomb.`);
+                arrayKillLogs.push(`                                  defused the bomb.`);
                 arrayPlayerOneNick.push(data.log[0].BombDefused.playerNick);
                 arrayPlayerOneSide.push("CT");
                 arrayPlayerTwoSide.push(undefined);
