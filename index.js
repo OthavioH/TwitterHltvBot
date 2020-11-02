@@ -95,17 +95,35 @@ async function execBot(){
                     return null;
                 }
                 else if(tweet.user.screen_name == "FireXter" && tweet.text.split('#BotHltv')[1].trim() +1 >3){
-                    matchId = tweet.text.split('#BotHltv')[1].trim();
-                    Twitter.post(
-                        'statuses/update',
-                        {
-                            in_reply_to_status_id:tweetReplyId,
-                            is_quote_status:true,
-                            auto_populate_reply_metadata:true,
-                            status:`Match updated`
-                        }
-                    );
-                    connectHLTVBot(matchId);
+                    if(matchId !=""){
+                        HLTV.connectToScorebot({id:matchId,onConnect:(data,done)=>{
+                            done();
+                        }});
+                        matchId = tweet.text.split('#BotHltv')[1].trim();
+                        Twitter.post(
+                            'statuses/update',
+                            {
+                                in_reply_to_status_id:tweetReplyId,
+                                is_quote_status:true,
+                                auto_populate_reply_metadata:true,
+                                status:`Match updated`
+                            }
+                        );
+                        connectHLTVBot(matchId);
+                    }
+                    else{
+                        matchId = tweet.text.split('#BotHltv')[1].trim();
+                        Twitter.post(
+                            'statuses/update',
+                            {
+                                in_reply_to_status_id:tweetReplyId,
+                                is_quote_status:true,
+                                auto_populate_reply_metadata:true,
+                                status:`Match updated`
+                            }
+                        );
+                        connectHLTVBot(matchId);
+                    }
                     
                     
                 }
@@ -290,7 +308,7 @@ async function connectHLTVBot(matchId){
                         victimSide = 'CT';
                 }
                 previousKillLog = data.log[0].Kill;
-                arrayKillLogs.push(`                                       killed                                                     with ${weapon}`);
+                arrayKillLogs.push(`                                       killed                                                        with ${weapon}`);
                 arrayPlayerOneNick.push(killerNick);
                 arrayPlayerOneSide.push(killerSide);
                 arrayPlayerTwoNick.push(victimNick);
