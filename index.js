@@ -81,6 +81,7 @@ var playerOneNick = "";
 var playerTwoNick = "";
 var mapName = "";
 var arrayKillLogs = [];
+var currentRound;
 
 execBot();
 
@@ -272,6 +273,7 @@ async function connectHLTVBot(matchId){
             mapName = data.mapName;
             isLive = data.live;
             frozen = data.frozen;
+            currentRound = data.currentRound;
 
         }, onLogUpdate:(data,done)=>{
             if(data.log[0].RoundStart != undefined){
@@ -478,16 +480,16 @@ async function connectHLTVBot(matchId){
                     }
 
                     function verifyWin(ctTeamName,ctScore,tTeamName,tScore){
-                        if(ctScore == 16 && ctScore+tScore <=30){
+                        if(ctScore == 16 && currentRound <=30){
                             console.log("Não chegou no OT e o CT ganhou");
                             return `✅${ctTeamName} won the map!`
                         }
-                        else if(tScore == 16 && ctScore+tScore <=30){
+                        else if(tScore == 16 && currentRound <=30){
                             console.log("Não chegou no OT e o TR ganhou");
                             return `✅${tTeamName} won the map!`
                         }
-                        else if(ctScore + tScore>30){
-                            if(ctScore + tScore >limiteAnterior && ctScore + tScore <=limiteAnterior+6){
+                        else if(currentRound>30){
+                            if(currentRound >limiteAnterior && currentRound <=limiteAnterior+6){
                                 if(ctScore == scoreLimit1){
                                     console.log("Chegou aqui no OT e o CT ganhou");
                                     return `✅${ctTeamName} won the map!`
@@ -499,7 +501,7 @@ async function connectHLTVBot(matchId){
                             }
                             else{
                                 limiteAnterior = limiteAnterior +6;
-                                scoreLimit1 = scoreLimit1+3;
+                                scoreLimit1 = scoreLimit1+4;
                             }
                         }
                         else {
