@@ -345,12 +345,12 @@ async function connectHLTVBot(matchId){
                 previousRoundEndLog = data.log[0].RoundEnd;
                 ctScore = data.log[0].RoundEnd.counterTerroristScore;
                 tScore = data.log[0].RoundEnd.terroristScore;
-                function saveImage(){
+                async function saveImage(){
                     const canvas =  createCanvas(1920,1080);
                     const ctx = canvas.getContext('2d');
                     var previousY=25;
                     console.log(arrayPlayerOneNick);
-                    loadImage(`./src/${mapName}.jpg`,).then((image)=>{
+                    await loadImage(`./src/${mapName}.jpg`,).then((image)=>{
                         ctx.drawImage(image, 0,0, 1920, 1080);
                         console.log("Chegou até aqui");
                         for(var i = 0;i<arrayKillLogs.length;i++){
