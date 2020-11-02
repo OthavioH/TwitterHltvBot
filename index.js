@@ -323,7 +323,7 @@ async function connectHLTVBot(matchId){
                 previousSuicideLog = data.log[0].Suicide;
             }
             if(data.log[0].BombPlanted !=undefined && data.log[0].BombPlanted != previousBombLog){
-                arrayKillLogs.push(`                                  planted the bomb (${data.log[0].BombPlanted.tPlayers} Ts alive and ${data.log[0].BombPlanted.ctPlayers} CTs alive)`);
+                arrayKillLogs.push(`                             planted the bomb (${data.log[0].BombPlanted.tPlayers} Ts alive and ${data.log[0].BombPlanted.ctPlayers} CTs alive)`);
                 arrayPlayerOneNick.push(data.log[0].BombPlanted.playerNick);
                 arrayPlayerOneSide.push("TERRORIST");
                 arrayPlayerTwoSide.push(undefined);
@@ -332,7 +332,7 @@ async function connectHLTVBot(matchId){
         
             }
             if(data.log[0].BombDefused != undefined && data.log[0].BombDefused != previousDefusedLog){
-                arrayKillLogs.push(`                                  defused the bomb.`);
+                arrayKillLogs.push(`                             defused the bomb.`);
                 arrayPlayerOneNick.push(data.log[0].BombDefused.playerNick);
                 arrayPlayerOneSide.push("CT");
                 arrayPlayerTwoSide.push(undefined);
@@ -357,23 +357,23 @@ async function connectHLTVBot(matchId){
                             killerNameColor = verifyKillerSide(arrayPlayerOneSide[i]);
                             killedNameColor = verifyKilledSide(arrayPlayerTwoSide[i]);
                             ctx.beginPath();
-                            ctx.rect(425, previousY, 1200, 50)
-                            ctx.quadraticCurveTo(425,previousY,1200,50);
+                            ctx.rect(405, previousY, 1200, 50)
+                            ctx.quadraticCurveTo(405,previousY,1200,50);
                             ctx.lineWidth =10;
                             ctx.strokeStyle = "rgba(191, 0, 0,0.8)";
-                            ctx.strokeRect(425,previousY,1200,50);
+                            ctx.strokeRect(405,previousY,1200,50);
                             ctx.fillStyle = 'rgba(0,0,0,0.8)'
                             ctx.fill()
                             ctx.closePath();
                             ctx.beginPath();
                             ctx.font = '25px Impact';
                             ctx.fillStyle = 'rgba(255,255,255,1)'
-                            ctx.fillText(arrayKillLogs[i],600,previousY+35);
+                            ctx.fillText(arrayKillLogs[i],580,previousY+35);
                             ctx.closePath();
                             ctx.beginPath();
                             ctx.font = '25px Impact';
                             ctx.fillStyle = killerNameColor;
-                            ctx.fillText(arrayPlayerOneNick[i],440,previousY+35);
+                            ctx.fillText(arrayPlayerOneNick[i],420,previousY+35);
                             ctx.closePath();
                             ctx.beginPath();
                             ctx.font = '25px Impact';
@@ -381,7 +381,7 @@ async function connectHLTVBot(matchId){
 
                             if(arrayPlayerTwoNick[i] != undefined){
                                 
-                                ctx.fillText(arrayPlayerTwoNick[i],1050,previousY+35);
+                                ctx.fillText(arrayPlayerTwoNick[i],1030,previousY+35);
                                 
                             }
                             ctx.closePath();

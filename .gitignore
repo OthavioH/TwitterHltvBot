@@ -1,5 +1,6 @@
 node_modules
 start.bat
+templates
 *.bat
 'node_modules' 
 'node_modules' 
