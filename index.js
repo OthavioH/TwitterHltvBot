@@ -158,7 +158,7 @@ async function execBot(){
                                         for(var k = 0;k<mapas;k++){
                                             strMaps += `Map ${(k)+1}: ${result.maps[k].name} ${result.maps[k].result}\n`
                                         }
-                                        result.live == false ? isMatchLive = "❌" : isMatchLive="✅"
+                                        result.live == false ? isMatchLive = "❌ The game hasn't started" : isMatchLive="✅ The game is live!"
                                         matchEvent=result.event.name;
                                         
                                         console.log(result);
@@ -180,7 +180,7 @@ async function execBot(){
                                                 `Event: ${matchEvent}\n`+
                                                 `Format: ${result.format}\n`+
                                                 `Maps: \n${strMaps}`+
-                                                `Is it live now? R: ${isMatchLive}`
+                                                isMatchLive
                                             },
                                             function (error,data,response){
                                                 if(error != undefined){
