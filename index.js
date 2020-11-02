@@ -96,6 +96,7 @@ async function execBot(){
                     return null;
                 }
                 else if(tweet.user.screen_name == "FireXter" && tweet.text.split('#BotHltv')[1].trim() +1 >3){
+                    
                     if(matchId !=""){
                         HLTV.connectToScorebot({id:matchId,onConnect:(data,done)=>{
                             done();
@@ -125,6 +126,7 @@ async function execBot(){
                         );
                         connectHLTVBot(matchId);
                     }
+                    console.log("Match found "+matchId);
                     
                     
                 }
