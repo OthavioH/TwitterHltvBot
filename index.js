@@ -73,6 +73,14 @@ var arrayPlayerOneNick = [];
 var arrayPlayerTwoNick = [];
 var arrayPlayerOneSide = [];
 var arrayPlayerTwoSide = [];
+var killerSide;
+var killedSide;
+var killerNameColor;
+var killedNameColor;
+var playerOneNick = "";
+var playerTwoNick = "";
+var mapName = "";
+var arrayKillLogs = [];
 
 execBot();
 
@@ -505,7 +513,7 @@ async function connectHLTVBot(matchId){
                         Twitter.post(
                             'media/upload',
                             {	
-                                media:fs.readFileSync('killLog.png',{encoding:'base64'}),
+                                media:fs.readFileSync(`${mapName}.png`,{encoding:'base64'}),
                             },
                             function (err,data,response){
                                 if(err != undefined){
