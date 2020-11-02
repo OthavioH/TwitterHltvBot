@@ -308,7 +308,7 @@ async function connectHLTVBot(matchId){
                         victimSide = 'CT';
                 }
                 previousKillLog = data.log[0].Kill;
-                arrayKillLogs.push(`                                       killed                                                                                                      with ${weapon}`);
+                arrayKillLogs.push(`                                       killed                                                          with ${weapon}`);
                 arrayPlayerOneNick.push(killerNick);
                 arrayPlayerOneSide.push(killerSide);
                 arrayPlayerTwoNick.push(victimNick);
@@ -381,7 +381,7 @@ async function connectHLTVBot(matchId){
 
                             if(arrayPlayerTwoNick[i] != undefined){
                                 
-                                ctx.fillText(arrayPlayerTwoNick[i],910,previousY+35);
+                                ctx.fillText(arrayPlayerTwoNick[i],1210,previousY+35);
                                 
                             }
                             ctx.closePath();
