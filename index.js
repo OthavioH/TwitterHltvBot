@@ -87,7 +87,7 @@ execBot();
 
 async function execBot(){
     stream.on('tweet',function(tweet){
-        console.log("LOG SESSION = TRUE");
+        console.log("LOGGED");
         try{
             tweetReplyId = tweet.id_str;
             replyUserName = tweet.user.screen_name;
