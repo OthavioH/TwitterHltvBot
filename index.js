@@ -323,7 +323,7 @@ async function connectHLTVBot(matchId){
                 previousSuicideLog = data.log[0].Suicide;
             }
             if(data.log[0].BombPlanted !=undefined && data.log[0].BombPlanted != previousBombLog){
-                arrayKillLogs.push(`                                        planted the bomb.(${data.log[0].BombPlanted.tPlayers} Ts alive and ${data.log[0].BombPlanted.ctPlayers} CTs alive)`);
+                arrayKillLogs.push(`                                        planted the bomb (${data.log[0].BombPlanted.tPlayers} Ts alive and ${data.log[0].BombPlanted.ctPlayers} CTs alive)`);
                 arrayPlayerOneNick.push(data.log[0].BombPlanted.playerNick);
                 arrayPlayerOneSide.push("TERRORIST");
                 arrayPlayerTwoSide.push(undefined);
