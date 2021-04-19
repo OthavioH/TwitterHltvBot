@@ -1,6 +1,6 @@
 var twit = require('twit');
 const fs = require('fs');
-var config = require('./config.js');
+const config = require('../config/config.js');
 const {HLTV} = require('hltv');
 
 

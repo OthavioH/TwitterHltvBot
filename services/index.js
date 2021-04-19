@@ -1,5 +1,5 @@
 const twit = require('twit');
-const config = require('./config.js');
+const config = require('../config/config.js');
 const {HLTV} = require('hltv');
 const {createCanvas, loadImage } = require('canvas');
 const moment = require('moment-timezone');

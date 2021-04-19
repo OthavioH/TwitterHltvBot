@@ -1,7 +1,7 @@
 var twit = require('twit');
 var moment = require('moment-timezone');
 const fs = require('fs');
-var config = require('./config.js');
+const config = require('../config/config.js');
 const {HLTV} = require('hltv');
 const {createCanvas, loadImage,Canvas,Image } = require('canvas');
 
