@@ -370,7 +370,7 @@ async function connectHLTVBot(matchId){
                         }
                     }
                     canvasBuffer = canvas.toBuffer('image/png');
-                    fs.writeFileSync("../assets/killLog.png",canvasBuffer);
+                    fs.writeFileSync("./../assets/killLog.png",canvasBuffer);
                 }
                 
 
@@ -433,7 +433,7 @@ async function connectHLTVBot(matchId){
                         Twitter.post(
                             'media/upload',
                             {	
-                                media:fs.readFileSync(`../assets/killLog.png`,{encoding:'base64'}),
+                                media:fs.readFileSync(`./../assets/killLog.png`,{encoding:'base64'}),
                             },
                             function (err,data,response){
                                 if(err != undefined){
