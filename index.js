@@ -48,13 +48,13 @@ function putMatchId(matchId){
 execBot();
 
 async function execBot(){
-    streamTeste.on('tweet',function(tweet){
+    stream.on('tweet',function(tweet){
         console.log("LOG SESSION");
         try{
             tweetReplyId = tweet.id_str;
             replyUserName = tweet.user.screen_name;
             if(tweet.text.substr(9).trim().length>1){
-                reply = tweet.text.toLowerCase().split('#bothltvteste')[1].trim();
+                reply = tweet.text.toLowerCase().split('#bothltv')[1].trim();
                 if(tweet.user.screen_name == "BotHltv"){
                     return null;
                 }
@@ -296,7 +296,7 @@ async function connectHLTVBot(matchId){
                             ctx.closePath();
                             await loadImage(`./assets/${killLogs.killObject.weapon}.png`).then((img)=>{
 
-                                ctx.drawImage(img,620,previousY,200,70);
+                                ctx.drawImage(img,620,previousY,100,50);
                                 
                             });
                             ctx.beginPath();
