@@ -433,7 +433,7 @@ async function connectHLTVBot(matchId){
                         Twitter.post(
                             'media/upload',
                             {	
-                                media:fs.readFileSync(`killLog.png`,{encoding:'base64'}),
+                                media:fs.readFileSync(`../assets/killLog.png`,{encoding:'base64'}),
                             },
                             function (err,data,response){
                                 if(err != undefined){
