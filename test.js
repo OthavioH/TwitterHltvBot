@@ -134,17 +134,17 @@ async function saveImage(arrayKillLogs){
 			ctx.beginPath();
 			ctx.font = '25px Impact';
 			ctx.fillStyle = firstPlayerNameColor;
-			ctx.fillText(killLogs.killObject.killerNick,795,previousY+35);
+			ctx.fillText(killLogs.killObject.killerNick,695,previousY+35);
 			ctx.closePath();
 			await loadImage(`./assets/${killLogs.killObject.weapon}.png`).then((img)=>{
 
-				ctx.drawImage(img,1045,previousY,70,50);
+				ctx.drawImage(img,995,previousY,70,50);
 				
 			});
 
 			if(killLogs.killObject.headShot == true){
 				await loadImage('./assets/headshot.png').then((image)=>{
-					ctx.drawImage(image,1145, previousY,50,45);
+					ctx.drawImage(image,1095, previousY,50,45);
 				})
 			}
 			ctx.beginPath();
