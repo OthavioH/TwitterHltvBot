@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var putMatchID = require('../services/index.js');
+var putMatchID = require('../index.js');
 
 router.get("/",function(req,res){
     res.send("API is working properly");

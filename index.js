@@ -1,5 +1,5 @@
 const twit = require('twit');
-const config = require('../config/config.js');
+const config = require('./config/config.js');
 const {HLTV} = require('hltv');
 const {createCanvas, loadImage } = require('canvas');
 const moment = require('moment-timezone');
@@ -267,7 +267,7 @@ async function connectHLTVBot(matchId){
                     const canvas =  createCanvas(1920,1080);
                     const ctx = canvas.getContext('2d');
                     var previousY=25;
-                    loadImage(`../assets/maps/${mapName}.jpg`).then(async (image)=>{
+                    loadImage(`./assets/maps/${mapName}.jpg`).then(async (image)=>{
                         ctx.drawImage(image, 0,0, 1920, 1080);
                         console.log("Chegou até aqui");
                         
@@ -294,7 +294,7 @@ async function connectHLTVBot(matchId){
                             ctx.fillStyle = firstPlayerNameColor;
                             ctx.fillText(killLogs.killObject.killerNick,420,previousY+35);
                             ctx.closePath();
-                            await loadImage(`../assets/${killLogs.killObject.weapon}.png`).then((img)=>{
+                            await loadImage(`./assets/${killLogs.killObject.weapon}.png`).then((img)=>{
 
                                 ctx.drawImage(img,620,previousY,200,70);
                                 
@@ -313,7 +313,7 @@ async function connectHLTVBot(matchId){
                             ctx.fillStyle = firstPlayerNameColor;
                             ctx.fillText(killLogs.suicideObject.playerNick,420,previousY+35);
                             ctx.closePath();
-                            await loadImage(`../assets/suicide.png`).then((img)=>{
+                            await loadImage(`./assets/suicide.png`).then((img)=>{
 
                                 ctx.drawImage(img,620,previousY,70,50);
 
@@ -334,7 +334,7 @@ async function connectHLTVBot(matchId){
                             ctx.closePath();
                             const ctPlayers = killLogs.plantedObject.ctPlayers;
                             const tPlayers = killLogs.plantedObject.tPlayers;
-                            await loadImage(`../assets/c4.png`).then((img)=>{
+                            await loadImage(`./assets/c4.png`).then((img)=>{
 
                                 ctx.drawImage(img,620,previousY,70,50);
 
@@ -353,7 +353,7 @@ async function connectHLTVBot(matchId){
                             ctx.fillStyle = firstPlayerNameColor;
                             ctx.fillText(playerNick,420,previousY+35);
                             ctx.closePath();
-                            await loadImage(`../assets/defuse_kit.png`).then((img)=>{
+                            await loadImage(`./assets/defuse_kit.png`).then((img)=>{
 
                                 ctx.drawImage(img,620,previousY,200,200);
                             });
@@ -370,7 +370,7 @@ async function connectHLTVBot(matchId){
                         }
                     }
                     canvasBuffer = canvas.toBuffer('image/png');
-                    fs.writeFileSync("./../assets/killLog.png",canvasBuffer);
+                    fs.writeFileSync("./assets/killLog.png",canvasBuffer);
                 }
                 
 
@@ -433,7 +433,7 @@ async function connectHLTVBot(matchId){
                         Twitter.post(
                             'media/upload',
                             {	
-                                media:fs.readFileSync(`./../assets/killLog.png`,{encoding:'base64'}),
+                                media:fs.readFileSync(`./assets/killLog.png`,{encoding:'base64'}),
                             },
                             function (err,data,response){
                                 if(err != undefined){
