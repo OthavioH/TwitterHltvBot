@@ -367,11 +367,11 @@ async function connectHLTVBot(matchId){
                             ctx.beginPath();
                             ctx.font = '25px Impact';
                             ctx.fillStyle = firstPlayerNameColor;
-                            ctx.fillText(playerNick,920,previousY+35);
+                            ctx.fillText(playerNick,850,previousY+35);
                             ctx.closePath();
                             await loadImage(`./assets/defuse_kit.png`).then((img)=>{
                 
-                                ctx.drawImage(img,980,previousY+4,50,40);
+                                ctx.drawImage(img,1050,previousY+4,50,40);
                             });
                         }
                         
