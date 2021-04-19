@@ -1,0 +1,119 @@
+[
+    {
+        "logType": "Kill",
+        "Kill": {
+          "killerName": "nexar",
+          "killerNick": "nexar",
+          "killerSide": "TERRORIST",
+          "victimNick": "Coldzera",
+          "victimName": "sector",
+          "victimSide": "CT",
+          "weapon": "ak47",
+          "headShot": true,
+          "eventId": 2073269171,
+          "victimX": -2194,
+          "victimY": -382,
+          "killerX": -2542,
+          "killerY": -31,
+          "killerId": 20236,
+          "victimId": 20147
+        }
+    },{
+        "logType": "Kill",
+        "Kill": {
+          "killerName": "nexar",
+          "killerNick": "xablau14929244940",
+          "killerSide": "CT",
+          "victimNick": "xablau14929244940",
+          "victimName": "sector",
+          "victimSide": "TERRORIST",
+          "weapon": "m4a1",
+          "headShot": false,
+          "eventId": 2073269171,
+          "victimX": -2194,
+          "victimY": -382,
+          "killerX": -2542,
+          "killerY": -31,
+          "killerId": 20236,
+          "victimId": 20147
+        }
+    },{
+        "logType": "Kill",
+        "Kill": {
+          "killerName": "fer",
+          "killerNick": "Fer",
+          "killerSide": "TERRORIST",
+          "victimNick": "Fallen",
+          "victimName": "fallen",
+          "victimSide": "CT",
+          "weapon": "deagle",
+          "headShot": true,
+          "eventId": 2073269171,
+          "victimX": -2194,
+          "victimY": -382,
+          "killerX": -2542,
+          "killerY": -31,
+          "killerId": 20236,
+          "victimId": 20147
+        }
+    },{
+        "logType": "Kill",
+        "Kill": {
+          "killerName": "nexar",
+          "killerNick": "nexar",
+          "killerSide": "CT",
+          "victimNick": "Sector",
+          "victimName": "sector",
+          "victimSide": "TERRORIST",
+          "weapon": "m4a1",
+          "headShot": false,
+          "eventId": 2073269171,
+          "victimX": -2194,
+          "victimY": -382,
+          "killerX": -2542,
+          "killerY": -31,
+          "killerId": 20236,
+          "victimId": 20147
+        }
+    },{
+        "logType": "Kill",
+        "Kill": {
+          "killerName": "fallen",
+          "killerNick": "Fallen",
+          "killerSide": "CT",
+          "victimNick": "Sector",
+          "victimName": "sector",
+          "victimSide": "TERRORIST",
+          "weapon": "m4a1",
+          "headShot": false,
+          "eventId": 2073269171,
+          "victimX": -2194,
+          "victimY": -382,
+          "killerX": -2542,
+          "killerY": -31,
+          "killerId": 20236,
+          "victimId": 20147
+        }
+    },
+    {
+      "logType":"BombPlanted",
+      "BombPlanted":{
+        "ctPlayers": 1,
+        "tPlayers":1,
+        "playerNick":"Taco"
+      }
+    },
+    {
+      "logType":"BombDefused",
+      "BombDefused":{
+        "playerNick":"Taco"
+      }
+    },
+    {
+      "logType":"RoundEnd",
+      "RoundEnd":{
+        "counterTerroristScore": 8,
+        "terroristScore": 4
+      }
+    }
+]

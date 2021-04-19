@@ -254,7 +254,7 @@ async function connectHLTVBot(matchId){
 
                 arrayKillLogs.push({
                     logType:'BombDefused',
-                    plantedObject:data.log[0].BombDefused
+                    defusedObject:data.log[0].BombDefused
                 })
             }
         
@@ -274,17 +274,27 @@ async function connectHLTVBot(matchId){
                         console.log("Imagem criada");
                     });
                     for(indice = 0;indice<arrayKillLogs.length;indice++){
+
                         killLogs = arrayKillLogs[indice];
-                        ctx.beginPath();
-                        ctx.rect(405, previousY, 1200, 50)
-                        ctx.quadraticCurveTo(405,previousY,1200,50);
-                        ctx.lineWidth =10;
-                        ctx.strokeStyle = "rgba(191, 0, 0,0.8)";
-                        ctx.strokeRect(405,previousY,1200,50);
-                        ctx.fillStyle = 'rgba(0,0,0,0.8)'
-                        ctx.fill()
-                        ctx.closePath();
-                        ctx.beginPath();
+
+                        if(indice == 0){
+                            await createLogBackground();
+                        }
+                        createLogBackground();
+                        
+                        function createLogBackground(){
+                            ctx.beginPath();
+                            ctx.rect(405, previousY, 1200, 50)
+                            ctx.quadraticCurveTo(405,previousY,1200,50);
+                            ctx.lineWidth =10;
+                            ctx.strokeStyle = "rgba(191, 0, 0,0.8)";
+                            ctx.strokeRect(405,previousY,1200,50);
+                            ctx.fillStyle = 'rgba(0,0,0,0.8)'
+                            ctx.fill()
+                            ctx.closePath();
+                            ctx.beginPath();
+                        }
+
                         if(killLogs.logType === 'Kill'){
                             firstPlayerNameColor = verifySide(killLogs.killObject.killerSide);
                             victimNameColor = verifySide(killLogs.killObject.victimSide);
@@ -299,6 +309,13 @@ async function connectHLTVBot(matchId){
                                 ctx.drawImage(img,620,previousY,100,50);
                                 
                             });
+
+                            if(killLogs.killObject.headShot == true){
+                                await loadImage('./assets/headshot.png').then((image)=>{
+                                    ctx.drawImage(image,770, previousY,50,45);
+                                })
+                            }
+
                             ctx.beginPath();
                             ctx.font = '25px Impact';
                             ctx.fillStyle = victimNameColor;
