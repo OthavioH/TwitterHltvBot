@@ -302,24 +302,23 @@ async function connectHLTVBot(matchId){
                             ctx.beginPath();
                             ctx.font = '25px Impact';
                             ctx.fillStyle = firstPlayerNameColor;
-                            ctx.fillText(killLogs.killObject.killerNick,420,previousY+35);
+                            ctx.fillText(killLogs.killObject.killerNick,795,previousY+35);
                             ctx.closePath();
                             await loadImage(`./assets/${killLogs.killObject.weapon}.png`).then((img)=>{
-
-                                ctx.drawImage(img,620,previousY,100,50);
+                
+                                ctx.drawImage(img,1045,previousY,70,50);
                                 
                             });
-
+                
                             if(killLogs.killObject.headShot == true){
                                 await loadImage('./assets/headshot.png').then((image)=>{
-                                    ctx.drawImage(image,770, previousY,50,45);
+                                    ctx.drawImage(image,1145, previousY,50,45);
                                 })
                             }
-
                             ctx.beginPath();
                             ctx.font = '25px Impact';
                             ctx.fillStyle = victimNameColor;
-                            ctx.fillText(victimNick,1030,previousY+35);
+                            ctx.fillText(victimNick,1230,previousY+35);
                             ctx.closePath();
                             
                         }
@@ -331,9 +330,9 @@ async function connectHLTVBot(matchId){
                             ctx.fillText(killLogs.suicideObject.playerNick,420,previousY+35);
                             ctx.closePath();
                             await loadImage(`./assets/suicide.png`).then((img)=>{
-
+                
                                 ctx.drawImage(img,620,previousY,70,50);
-
+                
                                 ctx.beginPath();
                                 ctx.font = '25px Impact';
                                 ctx.fillStyle = firstPlayerNameColor;
@@ -347,19 +346,19 @@ async function connectHLTVBot(matchId){
                             ctx.beginPath();
                             ctx.font = '25px Impact';
                             ctx.fillStyle = firstPlayerNameColor;
-                            ctx.fillText(killLogs.plantedObject.playerNick,420,previousY+35);
+                            ctx.fillText(killLogs.plantedObject.playerNick,800,previousY+35);
                             ctx.closePath();
                             const ctPlayers = killLogs.plantedObject.ctPlayers;
                             const tPlayers = killLogs.plantedObject.tPlayers;
+                
+                            ctx.beginPath();
+                            ctx.font = '25px Impact';
+                            ctx.fillStyle = '#fff';
+                            ctx.fillText(`CTs alive: ${ctPlayers} Ts alive: ${tPlayers}`,930,previousY+35);
+                            ctx.closePath();
                             await loadImage(`./assets/c4.png`).then((img)=>{
-
-                                ctx.drawImage(img,620,previousY,70,50);
-
-                                ctx.beginPath();
-                                ctx.font = '25px Impact';
-                                ctx.fillStyle = '#fff';
-                                ctx.fillText(`CTs alive: ${ctPlayers} Ts alive: ${tPlayers}`,1030,previousY+35);
-                                ctx.closePath();
+                
+                                ctx.drawImage(img,845,previousY-20,100,90);
                             });
                         }
                         if(killLogs.logType === 'BombDefused'){
@@ -368,11 +367,11 @@ async function connectHLTVBot(matchId){
                             ctx.beginPath();
                             ctx.font = '25px Impact';
                             ctx.fillStyle = firstPlayerNameColor;
-                            ctx.fillText(playerNick,420,previousY+35);
+                            ctx.fillText(playerNick,920,previousY+35);
                             ctx.closePath();
                             await loadImage(`./assets/defuse_kit.png`).then((img)=>{
-
-                                ctx.drawImage(img,620,previousY,200,200);
+                
+                                ctx.drawImage(img,980,previousY+4,50,40);
                             });
                         }
                         
