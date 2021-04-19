@@ -178,7 +178,7 @@ async function saveImage(arrayKillLogs){
 			ctx.beginPath();
 			ctx.font = '25px Impact';
 			ctx.fillStyle = firstPlayerNameColor;
-			ctx.fillText(killLogs.plantedObject.playerNick,800,previousY+35);
+			ctx.fillText(`${killLogs.plantedObject.playerNick}`,800,previousY+35);
 			ctx.closePath();
 			const ctPlayers = killLogs.plantedObject.ctPlayers;
 			const tPlayers = killLogs.plantedObject.tPlayers;
@@ -186,11 +186,11 @@ async function saveImage(arrayKillLogs){
 			ctx.beginPath();
 			ctx.font = '25px Impact';
 			ctx.fillStyle = '#fff';
-			ctx.fillText(`CTs alive: ${ctPlayers} Ts alive: ${tPlayers}`,930,previousY+35);
+			ctx.fillText(`CTs alive: ${ctPlayers} Ts alive: ${tPlayers}`,1080,previousY+35);
 			ctx.closePath();
 			await loadImage(`./assets/c4.png`).then((img)=>{
 
-				ctx.drawImage(img,845,previousY-20,100,90);
+				ctx.drawImage(img,995,previousY-20,100,90);
 			});
 		}
 		if(killLogs.logType === 'BombDefused'){
