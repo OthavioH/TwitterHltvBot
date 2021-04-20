@@ -297,13 +297,9 @@ async function connectHLTVBot(matchId){
                             });
                 
                             if(killLogs.killObject.headShot == true){
-<<<<<<< Updated upstream:index.js
-                                await loadImage('./assets/headshot.png').then((image)=>{
-                                    ctx.drawImage(image,1145, previousY,50,45);
-=======
+
                                 await loadImage(__dirname +'/assets/headshot.png').then((image)=>{
                                     ctx.drawImage(image,1045, previousY,50,45);
->>>>>>> Stashed changes:src/setMatch.js
                                 })
                             }
                             ctx.beginPath();
