@@ -58,20 +58,6 @@ async function execBot(){
                 if(tweet.user.screen_name == "BotHltv"){
                     return null;
                 }
-                else if(tweet.user.screen_name == "FireXter" && reply +1 >3){
-                    
-                    matchId = reply;
-                    Twitter.post(
-                        'statuses/update',
-                        {
-                            in_reply_to_status_id:tweetReplyId,
-                            is_quote_status:true,
-                            auto_populate_reply_metadata:true,
-                            status:`Match updated`
-                        }
-                    );
-                    connectHLTVBot(matchId);
-                }
                 else {
                     strMaps = "";
                     isMatchLive = "";
@@ -267,7 +253,7 @@ async function connectHLTVBot(matchId){
                     const canvas =  createCanvas(1920,1080);
                     const ctx = canvas.getContext('2d');
                     var previousY=25;
-                    loadImage(`./assets/maps/${mapName}.jpg`).then(async (image)=>{
+                    loadImage(`${__dirname}/assets/maps/${mapName}.jpg`).then(async (image)=>{
                         ctx.drawImage(image, 0,0, 1920, 1080);
                         console.log("Chegou até aqui");
                         
@@ -304,15 +290,20 @@ async function connectHLTVBot(matchId){
                             ctx.fillStyle = firstPlayerNameColor;
                             ctx.fillText(killLogs.killObject.killerNick,795,previousY+35);
                             ctx.closePath();
-                            await loadImage(`./assets/${killLogs.killObject.weapon}.png`).then((img)=>{
+                            await loadImage(`${__dirname}/assets/${killLogs.killObject.weapon}.png`).then((img)=>{
                 
                                 ctx.drawImage(img,1045,previousY,70,50);
                                 
                             });
                 
                             if(killLogs.killObject.headShot == true){
+<<<<<<< Updated upstream:index.js
                                 await loadImage('./assets/headshot.png').then((image)=>{
                                     ctx.drawImage(image,1145, previousY,50,45);
+=======
+                                await loadImage(__dirname +'/assets/headshot.png').then((image)=>{
+                                    ctx.drawImage(image,1045, previousY,50,45);
+>>>>>>> Stashed changes:src/setMatch.js
                                 })
                             }
                             ctx.beginPath();
@@ -329,7 +320,7 @@ async function connectHLTVBot(matchId){
                             ctx.fillStyle = firstPlayerNameColor;
                             ctx.fillText(killLogs.suicideObject.playerNick,420,previousY+35);
                             ctx.closePath();
-                            await loadImage(`./assets/suicide.png`).then((img)=>{
+                            await loadImage(`${__dirname}/assets/suicide.png`).then((img)=>{
                 
                                 ctx.drawImage(img,620,previousY,70,50);
                 
@@ -356,7 +347,7 @@ async function connectHLTVBot(matchId){
                             ctx.fillStyle = '#fff';
                             ctx.fillText(`CTs alive: ${ctPlayers} Ts alive: ${tPlayers}`,1080,previousY+35);
                             ctx.closePath();
-                            await loadImage(`./assets/c4.png`).then((img)=>{
+                            await loadImage(`${__dirname}/assets/c4.png`).then((img)=>{
 
                                 ctx.drawImage(img,995,previousY-20,100,90);
                             });
@@ -369,7 +360,7 @@ async function connectHLTVBot(matchId){
                             ctx.fillStyle = firstPlayerNameColor;
                             ctx.fillText(playerNick,920,previousY+35);
                             ctx.closePath();
-                            await loadImage(`./assets/defuse_kit.png`).then((img)=>{
+                            await loadImage(`${__dirname}/assets/defuse_kit.png`).then((img)=>{
                 
                                 ctx.drawImage(img,980,previousY+4,50,40);
                             });
@@ -386,7 +377,7 @@ async function connectHLTVBot(matchId){
                         }
                     }
                     canvasBuffer = canvas.toBuffer('image/png');
-                    fs.writeFileSync("./assets/killLog.png",canvasBuffer);
+                    fs.writeFileSync(__dirname + "/assets/killLog.png",canvasBuffer);
                 }
                 
 
@@ -449,7 +440,7 @@ async function connectHLTVBot(matchId){
                         Twitter.post(
                             'media/upload',
                             {	
-                                media:fs.readFileSync(`./assets/killLog.png`,{encoding:'base64'}),
+                                media:fs.readFileSync(__dirname + "/assets/killLog.png",{encoding:'base64'}),
                             },
                             function (err,data,response){
                                 if(err != undefined){
