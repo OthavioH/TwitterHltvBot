@@ -10,34 +10,63 @@ const Twitter =  new twit(config);
 const stream = Twitter.stream('statuses/filter',{track:['#BotHltv','#bothltv','#Bothltv']});
 const streamTeste = Twitter.stream('statuses/filter',{track:['#bothltvteste']});
 
-var matchId = "";
-var ctTeamName = "";
-var tTeamName = "";
-var ctScore = "";
-var tScore = "";
-var mapName = "";
-var tweetId = "";
-var killerNick = "";
-var killerSide = "";
-var victimSide = "";
-var victimNick = "";
-var weapon="";
-var highlightedPlayer = "";
-var reply;
-var tweetReplyId;
-var mapas = 1;
-var strMaps = "";
-var isMatchLive="";
-var matchEvent = "";
-var replyUserName = "";
-var numberIndice=0;
-var killerSide;
-var firstPlayerNameColor;
-var victimNameColor;
-var mapName = "";
-var arrayKillLogs = [];
-let indice;
-let killLogs = [];
+let matchId = "";
+    let ctTeamName = "";
+    let tTeamName = "";
+    let ctScore = "";
+    let tScore = "";
+    let mapName = "";
+    let tweetId = "";
+    let killerNick = "";
+    let killerSide = "";
+    let victimSide = "";
+    let victimNick = "";
+    let weapon="";
+    let highlightedPlayer = "";
+    let reply;
+    let tweetReplyId;
+    let mapas = 1;
+    let strMaps = "";
+    let isMatchLive="";
+    let matchEvent = "";
+    let numberIndice=0;
+    let killerSide;
+    let firstPlayerNameColor;
+    let victimNameColor;
+    let mapName = "";
+    let arrayKillLogs = [];
+    let indice;
+    let killLogs = [];
+
+function iniciateVariables(){
+    matchId = "";
+    ctTeamName = "";
+    tTeamName = "";
+    ctScore = "";
+    tScore = "";
+    mapName = "";
+    tweetId = "";
+    killerNick = "";
+    killerSide = "";
+    victimSide = "";
+    victimNick = "";
+    weapon="";
+    highlightedPlayer = "";
+    reply;
+    tweetReplyId;
+    mapas = 1;
+    strMaps = "";
+    isMatchLive="";
+    matchEvent = "";
+    numberIndice=0;
+    killerSide;
+    firstPlayerNameColor;
+    victimNameColor;
+    mapName = "";
+    arrayKillLogs = [];
+    indice;
+    killLogs = [];
+}
 
 
 function putMatchId(matchId){
@@ -64,14 +93,14 @@ async function execBot(){
                     numberIndice = 0;
                     HLTV.getMatches().then((res) => {
         
-                        for(var i = 0;i<=res.length;i++){
+                        for(let i = 0;i<=res.length;i++){
                             try{
                                 if(res[i].team1.name.toLowerCase().includes(reply) || res[i].team2.name.toLowerCase().includes(reply)){
                                     HLTV.getMatch({id:res[i].id}).then(result=>{
                                         strMaps = "";
                                         mapas = result.maps.length;
                                         console.log(mapas);
-                                        for(var k = 0;k<mapas;k++){
+                                        for(let k = 0;k<mapas;k++){
                                             strMaps += `Map ${(k)+1}: ${result.maps[k].name} ${result.maps[k].result}\n`
                                         }
                                         result.live == false ? isMatchLive = "❌ The game hasn't started" : isMatchLive="✅ The game is live!";
@@ -188,7 +217,7 @@ async function connectHLTVBot(matchId){
             if(data.log[0].RoundStart != undefined){
                 arrayKillLogs = [];
             }
-            // && data.log[0].Kill !== arrayKillLogs[arrayKillLogs.length-1].killObject
+            
             if(data.log[0].Kill !== undefined ){
                 killerSide = data.log[0].Kill.killerSide;
                 killerNick = data.log[0].Kill.killerNick;
@@ -252,7 +281,7 @@ async function connectHLTVBot(matchId){
                 async function saveImage(){
                     const canvas =  createCanvas(1920,1080);
                     const ctx = canvas.getContext('2d');
-                    var previousY=25;
+                    let previousY=25;
                     loadImage(`${__dirname}/assets/maps/${mapName}.jpg`).then(async (image)=>{
                         ctx.drawImage(image, 0,0, 1920, 1080);
                         console.log("Chegou até aqui");
