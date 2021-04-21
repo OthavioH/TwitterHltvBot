@@ -197,9 +197,7 @@ async function connectHLTVBot(matchId){
     arrayKillLogs = [];
     iniciateVariables();
 
-    const myHLTV = HLTV.createInstance({loadPage:(url)=>axios.get(url)});
-
-    myHLTV.connectToScorebot({id:matchId,
+    HLTV.connectToScorebot({id:matchId,
         onDisconnect:(data)=>{
             strKillLog = "";
             strKillLog2 = "";
