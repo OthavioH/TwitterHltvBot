@@ -2,7 +2,8 @@ const {HLTV} = require('hltv');
 const putMatchID = require('../setMatch');
 
 module.exports = {
-    index(req,res){
+    getAllMatches(req,res){
+
         HLTV.getMatches().then((result)=>{
             return res.status(200).json({
                 allData:result
@@ -24,5 +25,5 @@ module.exports = {
             }
             return res.status(200);
         }
-    }
+    }, 
 }

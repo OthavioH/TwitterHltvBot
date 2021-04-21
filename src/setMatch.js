@@ -394,28 +394,6 @@ async function connectHLTVBot(matchId){
                         }
                     );
                     
-
-                    function makeTweetWin(winnerTeamName,ctScore,tScore){
-                        Twitter.post(
-                            'statuses/update',
-                            {
-                                status:`The match has ended\n`+
-                                `🔵 ${ctTeamName} - ${ctScore} x ${tScore} - ${tTeamName} 🟠\n`+
-                                `Map: ${mapName}\n\n`+
-                                win
-                            },
-                            function (err,data,response){
-                                if(err != undefined){
-                                    console.log(err);
-                                }
-                                else{
-                                    tweetId = data.id_str;
-                                    console.log("Tweet de win enviado");
-                                }
-                            }
-                        );
-                    }
-                    
                     function postKillLogs(tweetId){
 
                         Twitter.post(
@@ -463,28 +441,6 @@ function verifyWinType(winType) {
     }else{
         return winType;
     }
-}
-
-
-
-function tweetHighlightedPlayer(tweetId){
-    HLTV.getMatch({id:matchId}).then(res =>{
-        highlightedPlayer = res.highlightedPlayer.name;
-    });
-    Twitter.post(
-        'statuses/update',
-        {
-            in_reply_to_status_id:tweetId,
-            is_quote_status:true,
-            auto_populate_reply_metadata:true,
-            status:`MVP: ${highlightedPlayer}`
-        },
-        function (error,data,response){
-            if(error != undefined){
-                console.log(error);
-            }
-        }
-    );
 }
 
 module.exports = putMatchId;
