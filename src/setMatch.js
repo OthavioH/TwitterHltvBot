@@ -292,7 +292,7 @@ async function connectHLTVBot(matchId){
                             ctx.closePath();
                             await loadImage(`${__dirname}/assets/${killLogs.killObject.weapon}.png`).then((img)=>{
                 
-                                ctx.drawImage(img,1045,previousY,70,50);
+                                ctx.drawImage(img,945,previousY,70,50);
                                 
                             });
                 
