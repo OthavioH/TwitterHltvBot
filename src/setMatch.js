@@ -11,32 +11,30 @@ const stream = Twitter.stream('statuses/filter',{track:['#BotHltv','#bothltv','#
 const streamTeste = Twitter.stream('statuses/filter',{track:['#bothltvteste']});
 
 let matchId = "";
-    let ctTeamName = "";
-    let tTeamName = "";
-    let ctScore = "";
-    let tScore = "";
-    let mapName = "";
-    let tweetId = "";
-    let killerNick = "";
-    let killerSide = "";
-    let victimSide = "";
-    let victimNick = "";
-    let weapon="";
-    let highlightedPlayer = "";
-    let reply;
-    let tweetReplyId;
-    let mapas = 1;
-    let strMaps = "";
-    let isMatchLive="";
-    let matchEvent = "";
-    let numberIndice=0;
-    let killerSide;
-    let firstPlayerNameColor;
-    let victimNameColor;
-    let mapName = "";
-    let arrayKillLogs = [];
-    let indice;
-    let killLogs = [];
+let ctTeamName = "";
+let tTeamName = "";
+let ctScore = "";
+let tScore = "";
+let mapName = "";
+let tweetId = "";
+let killerNick = "";
+let killerSide = "";
+let victimSide = "";
+let victimNick = "";
+let weapon="";
+let highlightedPlayer = "";
+let reply;
+let tweetReplyId;
+let mapas = 1;
+let strMaps = "";
+let isMatchLive="";
+let matchEvent = "";
+let numberIndice=0;
+let firstPlayerNameColor;
+let victimNameColor;
+let arrayKillLogs = [];
+let indice;
+let killLogs = [];
 
 function iniciateVariables(){
     matchId = "";
@@ -197,6 +195,7 @@ async function connectHLTVBot(matchId){
     strKillLog = "";
     strKillLog2 = "";
     arrayKillLogs = [];
+    iniciateVariables();
 
     HLTV.connectToScorebot({id:matchId,
         onDisconnect:(data)=>{
