@@ -24,7 +24,7 @@
     "express": "^4.17.1",
     "hltv": "^2.20.5",
     "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
+    "jade": "^0.29.0",
     "mime": "^1.6.0",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
