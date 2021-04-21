@@ -4,6 +4,7 @@ const {HLTV} = require('hltv');
 const {createCanvas, loadImage } = require('canvas');
 const moment = require('moment-timezone');
 const fs = require('fs');
+const axios = require('axios');
 
 const Twitter =  new twit(config);
 
@@ -182,7 +183,6 @@ async function execBot(){
         }
     });    
 }
-// connectHLTVBot();
 
 async function connectHLTVBot(matchId){
     scoreLimit1 = 15;
@@ -197,7 +197,9 @@ async function connectHLTVBot(matchId){
     arrayKillLogs = [];
     iniciateVariables();
 
-    HLTV.connectToScorebot({id:matchId,
+    const myHLTV = HLTV.createInstance({loadPage:(url)=>axios.get(url)});
+
+    myHLTV.connectToScorebot({id:matchId,
         onDisconnect:(data)=>{
             strKillLog = "";
             strKillLog2 = "";
