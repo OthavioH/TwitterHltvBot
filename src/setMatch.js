@@ -341,11 +341,11 @@ async function connectHLTVBot(matchId){
                             ctx.beginPath();
                             ctx.font = '25px Impact';
                             ctx.fillStyle = '#fff';
-                            ctx.fillText(`CTs alive: ${ctPlayers} Ts alive: ${tPlayers}`,1080,previousY+35);
+                            ctx.fillText(`CTs alive: ${ctPlayers} Ts alive: ${tPlayers}`,1020,previousY+35);
                             ctx.closePath();
                             await loadImage(`${__dirname}/assets/c4.png`).then((img)=>{
 
-                                ctx.drawImage(img,995,previousY-20,100,90);
+                                ctx.drawImage(img,935,previousY-20,100,90);
                             });
                         }
                         if(killLogs.logType === 'BombDefused'){
@@ -354,11 +354,11 @@ async function connectHLTVBot(matchId){
                             ctx.beginPath();
                             ctx.font = '25px Impact';
                             ctx.fillStyle = firstPlayerNameColor;
-                            ctx.fillText(playerNick,920,previousY+35);
+                            ctx.fillText(playerNick,880,previousY+35);
                             ctx.closePath();
                             await loadImage(`${__dirname}/assets/defuse_kit.png`).then((img)=>{
                 
-                                ctx.drawImage(img,980,previousY+4,50,40);
+                                ctx.drawImage(img,1050,previousY+4,50,40);
                             });
                         }
                         
