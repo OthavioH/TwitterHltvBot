@@ -4,6 +4,7 @@ const {HLTV} = require('hltv');
 const {createCanvas, loadImage } = require('canvas');
 const moment = require('moment-timezone');
 const fs = require('fs');
+const { default: axios } = require('axios');
 
 const Twitter =  new twit(config);
 
@@ -153,7 +154,9 @@ async function connectHLTVBot(matchId){
     let indice;
     let killLogs = [];
 
-    HLTV.connectToScorebot({id:matchId,
+    const myHLTV = require('hltv');
+
+    myHLTV.HLTV.connectToScorebot({id:matchId,
         onDisconnect:(data)=>{
             return console.log("Bot desconectado do Scorebot");
         },
