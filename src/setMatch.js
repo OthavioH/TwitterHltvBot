@@ -288,7 +288,7 @@ async function connectHLTVBot(matchId){
                             ctx.beginPath();
                             ctx.font = '25px Impact';
                             ctx.fillStyle = firstPlayerNameColor;
-                            ctx.fillText(killLogs.killObject.killerNick,795,previousY+35);
+                            ctx.fillText(killLogs.killObject.killerNick,650,previousY+35);
                             ctx.closePath();
                             await loadImage(`${__dirname}/assets/${killLogs.killObject.weapon}.png`).then((img)=>{
                 
