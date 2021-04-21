@@ -4,25 +4,17 @@ const {HLTV} = require('hltv');
 const {createCanvas, loadImage } = require('canvas');
 const moment = require('moment-timezone');
 const fs = require('fs');
-const axios = require('axios');
 
 const Twitter =  new twit(config);
 
 const stream = Twitter.stream('statuses/filter',{track:['#BotHltv','#bothltv','#Bothltv']});
-const streamTeste = Twitter.stream('statuses/filter',{track:['#bothltvteste']});
 
-let matchId = "";
-let ctTeamName = "";
-let tTeamName = "";
-let ctScore = "";
-let tScore = "";
-let mapName = "";
-let tweetId = "";
-let killerNick = "";
-let killerSide = "";
-let victimSide = "";
-let victimNick = "";
-let weapon="";
+
+function putMatchId(matchId){
+    console.log("Match updated");
+    connectHLTVBot(matchId);
+}
+
 let highlightedPlayer = "";
 let reply;
 let tweetReplyId;
@@ -31,47 +23,6 @@ let strMaps = "";
 let isMatchLive="";
 let matchEvent = "";
 let numberIndice=0;
-let firstPlayerNameColor;
-let victimNameColor;
-let arrayKillLogs = [];
-let indice;
-let killLogs = [];
-
-function iniciateVariables(){
-    matchId = "";
-    ctTeamName = "";
-    tTeamName = "";
-    ctScore = "";
-    tScore = "";
-    mapName = "";
-    tweetId = "";
-    killerNick = "";
-    killerSide = "";
-    victimSide = "";
-    victimNick = "";
-    weapon="";
-    highlightedPlayer = "";
-    reply;
-    tweetReplyId;
-    mapas = 1;
-    strMaps = "";
-    isMatchLive="";
-    matchEvent = "";
-    numberIndice=0;
-    killerSide;
-    firstPlayerNameColor;
-    victimNameColor;
-    mapName = "";
-    arrayKillLogs = [];
-    indice;
-    killLogs = [];
-}
-
-
-function putMatchId(matchId){
-    console.log("Match updated");
-    connectHLTVBot(matchId);
-}
 
 execBot();
 
@@ -185,22 +136,25 @@ async function execBot(){
 }
 
 async function connectHLTVBot(matchId){
-    scoreLimit1 = 15;
-    scoreLimit2 = 15;
-    isFinished = false;
-    limiteAnterior = 30;
-    matchStatus = "";
-    ctScore = 0;
-    tScore = 0;
-    strKillLog = "";
-    strKillLog2 = "";
-    arrayKillLogs = [];
-    iniciateVariables();
+    let ctTeamName = "";
+    let tTeamName = "";
+    let ctScore = 0;
+    let tScore = 0;
+    let mapName = "";
+    let tweetId = "";
+    let killerNick = "";
+    let killerSide = "";
+    let victimSide = "";
+    let victimNick = "";
+    let weapon="";
+    let firstPlayerNameColor;
+    let victimNameColor;
+    let arrayKillLogs = [];
+    let indice;
+    let killLogs = [];
 
     HLTV.connectToScorebot({id:matchId,
         onDisconnect:(data)=>{
-            strKillLog = "";
-            strKillLog2 = "";
             return console.log("Bot desconectado do Scorebot");
         },
         onScoreboardUpdate: (data,done)=>{
